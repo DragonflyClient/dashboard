@@ -1,0 +1,376 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,700;0,900;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+:root {
+  --clr-fg: #eff1f3;
+  --clr-bg: #37393a;
+  --clr-pdark: #de4f3f;
+  --clr-primary: #ef852e;
+  --clr-plight: #ffc247;
+}
+
+/* Global vars */
+.bg-gradient-primary {
+  background-color: #211b17 !important;
+  color: var(--clr-bg) !important;
+  background-image: none;
+}
+
+.text-drgn-primary {
+  color: var(--clr-primary);
+}
+
+.text-drgn-pdark {
+  color: var(--clr-pdark);
+}
+
+.text-drgn-plight {
+  color: var(--clr-plight);
+}
+
+.text-drgn-bg {
+  color: var(--clr-bg);
+}
+
+.border-left-drgn-plight {
+  border-left: 0.25rem solid var(--clr-plight) !important;
+}
+
+.border-left-drgn-pdark {
+  border-left: 0.25rem solid var(--clr-pdark) !important;
+}
+
+.border-left-drgn-primary {
+  border-left: 0.25rem solid var(--clr-primary) !important;
+}
+
+.border-left-drgn-bg {
+  border-left: 0.25rem solid var(--clr-bg) !important;
+}
+
+/* Login page */
+form.user .form-control-user,
+.btn-user {
+  border-radius: 0.35rem !important;
+}
+
+form.user .form-control-user:focus {
+  box-shadow: none !important;
+  border-color: #de4f3f85;
+}
+
+.btn-user,
+.btn-primary {
+  background-color: var(--clr-bg) !important;
+  box-shadow: none !important;
+  border-color: var(--clr-bg) !important;
+}
+
+.btn-user:hover,
+.btn-user:focus,
+.btn-user:active {
+  background-color: var(--clr-bg);
+  opacity: 0.95 !important;
+  box-shadow: none !important;
+  border-color: var(--clr-bg);
+}
+
+.bg-login-image {
+  background: white;
+  padding: 0;
+}
+
+.bg-login-image img {
+  width: 100%;
+  height: 100%;
+}
+
+.register .form-group {
+  margin-bottom: 1.4rem !important;
+}
+
+.form-group {
+  margin-bottom: 2rem !important;
+}
+
+hr {
+  margin: 1.5rem 0;
+}
+
+.small,
+.small:hover,
+.small:focus,
+.small:active {
+  color: var(--clr-bg) !important;
+}
+
+.form-wrapper.mt-5 {
+  margin-top: 5rem !important;
+}
+
+/* Dashboard main page */
+.pre-loader {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pre-loader-point {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: var(--clr-primary);
+  animation: jump 0.7s infinite;
+}
+
+.pre-loader-point:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.pre-loader-point:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.pre-loader-point:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.pl-hide {
+  animation: fadeOut 0.7s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fadeOut {
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+@keyframes jump {
+  0% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-20px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.pre-loader-point + .pre-loader-point {
+  margin-left: 20px;
+}
+
+/* 
+#accordionSidebar,
+#content-wrapper {
+    transition: 250ms ease;
+} */
+
+#accordionSidebar {
+  position: fixed !important;
+  z-index: 999;
+}
+
+#accordionSidebar.toggled + #content-wrapper {
+  margin-left: 105px;
+}
+
+#content-wrapper {
+  margin-left: 224px;
+}
+
+.btn-user,
+.btn-primary {
+  background-color: var(--clr-primary) !important;
+  box-shadow: none !important;
+  border-color: var(--clr-primary) !important;
+}
+
+.btn-link {
+  color: var(--clr-primary) !important;
+}
+
+.btn.focus,
+.btn:focus {
+  outline: 0;
+  box-shadow: none;
+}
+
+.row {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+#server-pie span {
+  text-transform: lowercase;
+}
+
+#accordionSidebar.toggled {
+  flex-direction: column !important;
+  display: flex !important;
+  /* justify-content: center; */
+  align-items: center !important;
+}
+
+.dropdown-item:focus,
+.dropdown-item:hover {
+  color: #2e2f37 !important;
+  text-decoration: none !important;
+  background-color: #f8f9fc !important;
+}
+
+.minecraft-account-card.card-body {
+  padding: 0 20px !important;
+}
+
+.minecraft-account-item {
+  padding: 20px 0 20px 0;
+  justify-content: space-between;
+}
+
+.minecraft-account-item + .minecraft-account-item {
+  border-top: 1px solid #e3e6f0;
+}
+
+.minecraft-account-item,
+.minecraft-account {
+  display: flex;
+  align-items: center;
+}
+
+.minecraft-skull {
+  max-width: 50px;
+  height: 50px;
+  margin-right: 15px;
+}
+
+.minecraft-account-name {
+  font-size: 1.4rem;
+  margin: 0;
+}
+
+.minecraft-account-none {
+  margin: 20px 0;
+}
+
+.minecraft-account-unlink {
+  align-self: baseline;
+  cursor: pointer;
+}
+
+.minecraft-account-unlink:hover .minecraft-account-unlink-icon {
+  color: #ffffff !important;
+  background-color: #e74a3b;
+  border: 2px solid #e74a3b;
+}
+
+.minecraft-account-unlink-icon {
+  align-self: center;
+  color: #e74a3b !important;
+  padding: 7px;
+  font-size: 1.05rem;
+  border: 2px solid #e74a3b;
+  border-radius: 3px;
+
+  transition: 0.2s ease;
+}
+
+.minecraft-account-unbind {
+  align-self: baseline;
+  cursor: pointer;
+}
+
+.minecraft-account-unbind:hover .minecraft-account-unbind-icon {
+  color: #ffffff !important;
+  background-color: #e74a3b;
+  border: 2px solid #e74a3b;
+}
+
+.minecraft-account-unbind-icon {
+  align-self: center;
+  color: #e74a3b !important;
+  padding: 7px 9px;
+  font-size: 1.15rem;
+  border: 2px solid #e74a3b;
+  border-radius: 3px;
+
+  transition: 0.2s ease;
+}
+
+.minecraft-account-check {
+  align-self: baseline;
+  cursor: pointer;
+}
+
+.minecraft-account-check:hover .minecraft-account-check-icon {
+  color: #ffffff !important;
+  background-color: #26c17d;
+  border: 2px solid #26c17d;
+}
+
+.minecraft-account-check-icon {
+  align-self: center;
+  color: #26c17d !important;
+  padding: 7px;
+  font-size: 1.05rem;
+  border: 2px solid #26c17d;
+  border-radius: 3px;
+
+  transition: 0.2s ease;
+}
+
+.minecraft-skull__dummie,
+.minecraft-account-name__dummie,
+.minecraft-account-uuid__dummie {
+  filter: blur(4px);
+}
+
+/* PARTNER */
+#partner-income-type-btn {
+  padding: 0.2rem 1.4rem !important;
+  font-size: 1rem !important;
+  margin-top: 0.35rem !important;
+}
+.income-mode-card-body {
+  padding-bottom: 10px;
+}
+
+.income-type,
+#income-type_selected {
+  text-transform: capitalize;
+}
+
+#partner-revenue_wrapper {
+  max-width: 400px;
+}
+
+#partner-revenue_discount-note {
+  padding-left: 1.25rem;
+  margin-top: -10px;
+  display: none;
+}
+
+@media (max-width: 770px) {
+  #accordionSidebar {
+    position: static !important;
+  }
+
+  #content-wrapper {
+    margin-left: 0 !important;
+  }
+}
+
+@media (max-width: 660px) {
+  .page-heading {
+    display: none;
+  }
+}

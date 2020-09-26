@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error | Dragonfly</title>
+    <link rel="shortcut icon" href="https://playdragonfly.net/assets/Dragon.svg" type="image/x-icon">
+    <link rel="stylesheet" href="<%= process.env.URL %>/css/status.css">
+</head>
+
+<body>
+    <div class="status-cont">
+        <div class="times-icon">
+            <span class="icon-inner">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <h1>Whoops.</h1>
+        <p><%= message %></p>
+        <p class="error_contact-support" style="font-size: 1.2rem; margin-top: 10px;">For more information and possible
+            help, please contact our support via our <a class="error_support-link"
+                href="https://icnet.dev/discord">Discord server</a>, <a class="error_support-link"
+                href="https://twitter.com/DragonflyClient">Twitter</a> account or send us an <a
+                class="error_support-link" href="mailto:support@playdragonfly.net">email</a><br>
+        </p>
+        <!-- <div class="back-link">
+            <h3><a href=<%= backUrl || "https://store.playdragonfly.net/?ref=error_checkout" %>>
+                    <span class="link-icon"><i class="fas fa-backward"></i></span> <span class="link-text">Back to
+                        store</span>
+                </a></h3>
+        </div> -->
+    </div>
+
+    <!-- Fontawesome -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"></script>
+</body>
+
+</html>
