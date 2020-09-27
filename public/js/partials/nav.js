@@ -9,6 +9,6 @@ async function logOut() {
         }
     })
     const data = await result.json()
-    if (data.success) window.location.reload()
     console.log(data)
+    if (data.success) window.location.href = "https://dashboard.playdragonfly.net/login"
 }
