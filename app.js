@@ -29,7 +29,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/auth', authRouter);
 
 // Security while development
-app.get('/*', async (req, res) => {
+app.get('/', async (req, res) => {
     const dragonflyToken = req.cookies["dragonfly-token"]
     if (!dragonflyToken) return res.render("error", { message: 'Please login in order to see this content.', backUrl: "https://playdragonfly.net", paymentId: null })
     const result = await axios.post('https://api.playdragonfly.net/v1/authentication/token', {}, {
@@ -39,14 +39,12 @@ app.get('/*', async (req, res) => {
     })
     const dragonflyUsername = result.data.username
     if (MODE === "DEVELOPMENT") {
-
         if (result.data.permissionLevel <= 8) return res.render("error", { message: 'You don\'t have permission to access this resource.', backUrl: "https://playdragonfly.net", paymentId: null })
         return res.render('index', { title: 'Express!', username: dragonflyUsername });
     }
-    res.render('index', { title: 'Express!', username: dragonflyUsername });
+    res.render('index', { title: 'Express!', username: dragonflyUsername })
 })
 
 app.use('/', indexRouter);
-
 
 module.exports = app;
