@@ -8,6 +8,10 @@
   --clr-plight: #ffc247;
 }
 
+.dropdown-item {
+  cursor: pointer;
+}
+
 /* Global vars */
 .bg-gradient-primary {
   background-color: #211b17 !important;
