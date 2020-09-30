@@ -1,0 +1,18 @@
+<% linkedMinecraftAccounts.map(acc => { %>
+<div class="minecraft-account-item">
+    <div class="minecraft-account">
+        <img class="minecraft-skull" width="50px" src="https://crafatar.com/avatars/<%= acc.uuid %> " alt="Head" />
+        <div class="minecraft-account-info">
+            <h4 class="small font-weight-bold minecraft-account-name">
+                <%= acc.minecraftName %>
+            </h4>
+            <div class="minecraft-account-uuid"><%= acc.uuid %></div>
+        </div>
+    </div>
+    <div id=<%= acc.uuid %> onclick="unlinkMinecraftAccount(this)" class="minecraft-account-unlink"
+        title="Unlink Minecraft Account">
+        <i class="fas fa-unlink float-right minecraft-account-unlink-icon"></i>
+    </div>
+</div>
+<% }) %>
+<script src="https://dashboard.playdragonfly.net/js/partials/minecraft-accounts.js"></script>
