@@ -1,0 +1,1 @@
+document.getElementById(window.location.href.split('/')[window.location.href.split('/').length - 1] || "/").classList.add('active')
