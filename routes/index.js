@@ -3,7 +3,6 @@ var router = express.Router();
 const axios = require('axios').default;
 
 const secureAuth = async function (req, res, next) {
-  console.log(req)
   const dragonflyToken = req.cookies["dragonfly-token"]
   if (!dragonflyToken) return res.redirect(`https://playdragonfly.net/login?ref=https://dashboard.playdragonfly.net${req.path}`)
   next()
@@ -36,7 +35,7 @@ router.get('/cosmetics', async (req, res) => {
   const token = req.cookies["dragonfly-token"]
   const account = await getDragonflyAccount(token)
   console.log(account, token)
-  res.render('sites/cosmetics', { username: account.username, path: req.path })
+  res.render('sites/cosmetics', { account: account, path: req.path })
 })
 
 async function getDragonflyAccount(token) {
