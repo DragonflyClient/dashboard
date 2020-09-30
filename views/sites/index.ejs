@@ -128,7 +128,7 @@
       <!-- Main Content -->
       <div id="content">
         <!-- Topbar -->
-        <%- include('../partials/nav', { username: username, path: path }) %>
+        <%- include('../partials/nav', { account: account, path: path }) %>
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
@@ -343,34 +343,7 @@
                   </h6>
                 </div>
                 <div class="card-body minecraft-account-card" id="minecraft-account-card">
-                  <div class="minecraft-account-item">
-                    <div class="minecraft-account">
-                      <img class="minecraft-skull minecraft-skull__dummie" width="50px"
-                        src="https://crafatar.com/avatars/606e2ff0-ed77-4842-9d6c-e1d3321c7838" alt="Head" />
-                      <div class="minecraft-account-info">
-                        <h4 class="small font-weight-bold minecraft-account-name minecraft-account-name__dummie">
-                          Loading
-                        </h4>
-                        <div class="minecraft-account-uuid minecraft-account-uuid__dummie">
-                          xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="minecraft-account-item">
-                    <div class="minecraft-account">
-                      <img class="minecraft-skull minecraft-skull__dummie" width="50px"
-                        src="https://crafatar.com/avatars/606e2ff0-ed77-4842-9d6c-e1d3321c7838" alt="Head" />
-                      <div class="minecraft-account-info">
-                        <h4 class="small font-weight-bold minecraft-account-name minecraft-account-name__dummie">
-                          Loading
-                        </h4>
-                        <div class="minecraft-account-uuid minecraft-account-uuid__dummie">
-                          xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  <%- include('../partials/minecraft-accounts', { linkedMinecraftAccounts: linkedMinecraftAccounts }) %>
                 </div>
               </div>
             </div>
