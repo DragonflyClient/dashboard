@@ -11,6 +11,7 @@ const axios = require('axios')
 
 var indexRouter = require('./routes/index');
 var authRouter = require('./routes/authentication');
+var minecraftRouter = require('./routes/minecraft')
 
 var app = express();
 
@@ -28,6 +29,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // API ROUTES
 app.use('/auth', authRouter);
 
+app.use('/minecraft', minecraftRouter)
 app.use('/', indexRouter);
 
 module.exports = app;
