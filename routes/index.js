@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const axios = require('axios');
+const axios = require('axios').default;
 
 const secureAuth = async function (req, res, next) {
   console.log(req)
@@ -14,8 +14,22 @@ router.use(secureAuth)
 router.get('/', async (req, res) => {
   const token = req.cookies["dragonfly-token"]
   const account = await getDragonflyAccount(token)
-  console.log(account, token)
-  res.render('sites/index', { username: account.username, path: req.path })
+
+  const linkedMinecraftAccounts = account.linkedMinecraftAccounts
+
+  const mcAccounts = []
+  for (let i = 0; i < linkedMinecraftAccounts.length; i++) {
+    console.log(linkedMinecraftAccounts[i])
+    const accountName = await getMinecraftName(linkedMinecraftAccounts[i])
+    const mcAcc = {
+      minecraftName: accountName,
+      uuid: linkedMinecraftAccounts[i],
+    }
+    mcAccounts.push(mcAcc)
+  }
+  console.log(mcAccounts)
+
+  res.render('sites/index', { account: account, linkedMinecraftAccounts: mcAccounts, path: req.path })
 })
 
 router.get('/cosmetics', async (req, res) => {
@@ -32,6 +46,11 @@ async function getDragonflyAccount(token) {
     }
   })
   return result.data
+}
+
+async function getMinecraftName(uuid) {
+  const response = await axios.get(`https://api.minetools.eu/uuid/${uuid}`);
+  return response.data.name;
 }
 
 // Security while development
