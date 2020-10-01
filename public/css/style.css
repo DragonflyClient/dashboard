@@ -378,3 +378,19 @@ hr {
     display: none;
   }
 }
+
+@media(max-width: 500px) {
+  .minecraft-skull {
+    width: 30px;
+    height: 30px;
+  }
+  .minecraft-account-uuid {
+    display: none;
+  }
+  .minecraft-account-item, .minecraft-account {
+    align-items: flex-start;
+  }
+  .minecraft-account-name {
+    word-break: break-all;
+  }
+}
