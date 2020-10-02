@@ -1,0 +1,25 @@
+<% linkedMinecraftAccounts.map((account, index) => { %>
+<% const bound = account.uuid == cosmeticItem.minecraft %>
+<% const className = bound ? "unbind" : "check" %>
+<% const tooltip = bound ? "Unbind from" : "Bind to" %>
+<% const icon = bound ? "times" : "check" %>
+<% const functionName = bound ? "unbindCosmetic" : "bindCosmetic" %>
+<% const onclickValue = functionName + "('" + account.uuid + "','" + cosmeticItem.cosmeticQualifier + "')"%>
+<div class="minecraft-account-item">
+    <div class="minecraft-account">
+        <img class="minecraft-skull" width="50px"
+            src="https://crafatar.com/avatars/<%= account.uuid.replace(/-/g, "") %>" alt="Head">
+        <div class="minecraft-account-info">
+            <h4 class="small font-weight-bold minecraft-account-name">
+                <%= account.minecraftName %>
+            </h4>
+        </div>
+    </div>
+    <div onclick=<%= onclickValue %> class="minecraft-account-<%= className %>"
+        title="<%= tooltip %> account <%= account.minecraftName %>">
+        <i class="fas fa-<%= icon %> float-right minecraft-account-<%= className %>-icon"></i>
+    </div>
+</div>
+<% }) %>
+
+<script src="https://dashboard.playdragonfly.net/js/partials/cosmetics-bind.js"></script>
