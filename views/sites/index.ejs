@@ -53,7 +53,11 @@
                         Playtime (total)
                       </div>
                       <div class="h5 mb-0 font-weight-bold text-gray-800">
-                        N/A
+                        <% if(totalPlaytime >= 60) { %>
+                        <%= totalPlaytime / 60  %>h
+                        <% } else { %>
+                        <%= totalPlaytime %>m
+                        <% } %>
                       </div>
                     </div>
                     <div class="col-auto">
@@ -74,7 +78,11 @@
                         Playtime (this month)
                       </div>
                       <div class="h5 mb-0 font-weight-bold text-gray-800">
-                        N/A
+                        <% if(monthlyPlaytime >= 60) { %>
+                        <%= monthlyPlaytime / 60  %>h
+                        <% } else { %>
+                        <%= monthlyPlaytime %>m
+                        <% } %>
                       </div>
                     </div>
                     <div class="col-auto">
