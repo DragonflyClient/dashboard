@@ -39,11 +39,47 @@
                 <!-- End of Topbar -->
 
                 <div class="row section__cosmetics">
-                    <div id="cosmetics-hide" class="cosmetics-hide">
+                    <!-- <div id="cosmetics-hide" class="cosmetics-hide">
                         <div class="spinner"></div>
+                    </div> -->
+                    <div style="width: 100%;" id="cosmetics-wrapper" class="row">
+                        <% cosmeticModels.map((model, index) => { %>
+                        <% const item = cosmetics[index] %>
+                        <div class="col-xl-4">
+                            <div class="card shadow mb-4">
+                                <!-- Card Header - Dropdown -->
+                                <div
+                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">
+                                        <%= model.name %>
+                                    </h6>
+                                </div>
+                                <!-- Card Body -->
+                                <div class="card-body card-body-cosmetic">
+                                    <div class="cosmetic-image">
+                                        <img src="<%= model.image %>" alt="Cosmetic">
+                                    </div>
+                                </div>
+                                <div class="cosmetic-account-section">
+                                    <div class="cosmetic-description">
+                                        <p>Choose a Minecraft account on which you want to use this cosmetic.</p>
+                                    </div>
+                                    <hr>
+                                    <div class="cosmetic-account-chooser">
+                                        <div class="card-body minecraft-account-card" id="minecraft-account-card">
+                                            <% if(linkedMinecraftAccounts.length >= 1) { %>
+                                            <%- include('../partials/cosmetics-bind', { linkedMinecraftAccounts: linkedMinecraftAccounts, cosmeticItem: item }) %>
+                                            <% } else { %>
+                                            <p style="padding-top: 10px;">All linked minecraft accounts are displayed
+                                                here.</p>
+                                            <% } %>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <% }) %>
                     </div>
-                    <div style="width: 100%;" id="cosmetics-wrapper" class="row"></div>
-
                 </div>
             </div>
         </div>
