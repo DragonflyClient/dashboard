@@ -28,7 +28,13 @@ function number_format(number, decimals, dec_point, thousands_sep) {
   return s.join(dec);
 }
 
-const playTimeYear = [0, 3.5, 3, 4, 3.5, 4, 6, 2.8, 5.2, 3.2, 3.0, 4.3, 3];
+const playTimeYear = [1];
+
+fetch("https://dashboard.playdragonfly.net/statistics/ot/total")
+  .then(res => res.json())
+  .then(data => {
+    console.log(data)
+  })
 
 
 // Area Chart Example
