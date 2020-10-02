@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const axios = require('axios').default;
+const mongoose = require('mongoose')
 
 const secureAuth = async function (req, res, next) {
   const dragonflyToken = req.cookies["dragonfly-token"]
@@ -16,14 +17,53 @@ router.get('/', async (req, res) => {
 
   const minecraftAccounts = await getLinkedMinecraftAccounts(account.linkedMinecraftAccounts)
 
-  res.render('sites/index', { account: account, linkedMinecraftAccounts: minecraftAccounts, path: req.path })
+  const dragonflyUUID = account.uuid
+  const statistics = await mongoose.connection.db.collection('statistics').findOne({ dragonflyUUID: dragonflyUUID });
+  const totalPlaytime = statistics.onlineTime.total
+  let monthlyPlaytime = 0
+
+  for (var key in statistics.onlineTime) {
+    if (statistics.onlineTime.hasOwnProperty(key)) {
+      const contains = key.split('/')[0] == new Date().getMonth() + 1
+      if (contains) monthlyPlaytime = statistics.onlineTime[key]
+    }
+  }
+
+  res.render('sites/index', { account: account, linkedMinecraftAccounts: minecraftAccounts, path: req.path, totalPlaytime: totalPlaytime, monthlyPlaytime: monthlyPlaytime })
 })
 
 router.get('/cosmetics', async (req, res) => {
   const token = req.cookies["dragonfly-token"]
   const account = await getDragonflyAccount(token)
-  console.log(account, token)
-  res.render('sites/cosmetics', { account: account, path: req.path })
+  const dragonflyUUID = account.uuid
+  const dragonflyCosmetics = await loadCosmetics(dragonflyUUID)
+  console.log(dragonflyCosmetics)
+
+  async function loadCosmetics(uuid) {
+    const result = await axios.get(`https://api.playdragonfly.net/v1/cosmetics/find?dragonfly=${uuid}`, {}, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
+    return result.data.cosmetics
+  }
+
+  const availableCosmetics = await loadAvailableCosmetics()
+
+  async function loadAvailableCosmetics() {
+    const result = await axios.get(`https://api.playdragonfly.net/v1/cosmetics/available`)
+    return result.data.availableCosmetics
+  }
+
+  const cosmeticModels = []
+  for (cosmetic of dragonflyCosmetics) {
+    const model = availableCosmetics.find(element => element.cosmeticId == cosmetic.cosmeticId)
+    cosmeticModels.push(model)
+  }
+
+  const minecraftAccounts = await getLinkedMinecraftAccounts(account.linkedMinecraftAccounts)
+
+  res.render('sites/cosmetics', { account: account, path: req.path, cosmeticModels: cosmeticModels, cosmetics: dragonflyCosmetics, linkedMinecraftAccounts: minecraftAccounts })
 })
 
 async function getDragonflyAccount(token) {
