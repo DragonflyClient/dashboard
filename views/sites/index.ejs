@@ -53,11 +53,9 @@
                         Playtime (total)
                       </div>
                       <div class="h5 mb-0 font-weight-bold text-gray-800">
-                        <% if(totalPlaytime >= 60) { %>
-                        <%= totalPlaytime / 60  %>h
-                        <% } else { %>
-                        <%= totalPlaytime %>m
-                        <% } %>
+                        <% const hours = Math.trunc(totalPlaytime / 60) %>
+                        <% const minutes = totalPlaytime % 60 %>
+                        <%= hours > 0 && minutes > 0 ? `${hours}h ${minutes}m` : hours > 0 ? `${hours}h` : `${minutes}m` %>
                       </div>
                     </div>
                     <div class="col-auto">
@@ -78,11 +76,9 @@
                         Playtime (this month)
                       </div>
                       <div class="h5 mb-0 font-weight-bold text-gray-800">
-                        <% if(monthlyPlaytime >= 60) { %>
-                        <%= monthlyPlaytime / 60  %>h
-                        <% } else { %>
-                        <%= monthlyPlaytime %>m
-                        <% } %>
+                        <% const monthlyHours = Math.trunc(monthlyPlaytime / 60) %>
+                        <% const monthlyMinutes = monthlyPlaytime % 60 %>
+                        <%= monthlyHours > 0 && monthlyMinutes > 0 ? `${monthlyHours}h ${monthlyMinutes}m` : monthlyHours > 0 ? `${monthlyHours}h` : `${monthlyMinutes}m` %>
                       </div>
                     </div>
                     <div class="col-auto">
@@ -124,7 +120,7 @@
                         Account creation date
                       </div>
                       <div id="dragonfly-account-creation-date" class="h5 mb-0 font-weight-bold text-gray-800">
-                        N/A
+                        <%= account.creationDate %>
                       </div>
                     </div>
                     <div class="col-auto">
