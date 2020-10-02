@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const axios = require('axios').default;
 const mongoose = require('mongoose')
+const moment = require('moment')
 
 const secureAuth = async function (req, res, next) {
   const dragonflyToken = req.cookies["dragonfly-token"]
@@ -17,15 +18,21 @@ router.get('/', async (req, res) => {
 
   const minecraftAccounts = await getLinkedMinecraftAccounts(account.linkedMinecraftAccounts)
 
-  const dragonflyUUID = account.uuid
   const statistics = await mongoose.connection.db.collection('statistics').findOne({ dragonflyUUID: dragonflyUUID });
-  const totalPlaytime = statistics.onlineTime.total
+
+  const dragonflyUUID = account.uuid
+  let totalPlaytime = 0
   let monthlyPlaytime = 0
 
-  for (var key in statistics.onlineTime) {
-    if (statistics.onlineTime.hasOwnProperty(key)) {
-      const contains = key.split('/')[0] == new Date().getMonth() + 1
-      if (contains) monthlyPlaytime = statistics.onlineTime[key]
+  account.creationDate = moment(account.creationDate).format('LL');
+
+  if (statistics) {
+    totalPlaytime = statistics.onlineTime.total
+    for (var key in statistics.onlineTime) {
+      if (statistics.onlineTime.hasOwnProperty(key)) {
+        const contains = key.split('/')[0] == new Date().getMonth() + 1
+        if (contains) monthlyPlaytime = statistics.onlineTime[key]
+      }
     }
   }
 
