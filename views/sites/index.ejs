@@ -252,7 +252,11 @@
                   </h6>
                 </div>
                 <div class="card-body minecraft-account-card" id="minecraft-account-card">
+                  <% if(linkedMinecraftAccounts.length >= 1) { %>
                   <%- include('../partials/minecraft-accounts', { linkedMinecraftAccounts: linkedMinecraftAccounts }) %>
+                  <% } else { %>
+                  <p style="padding-top: 10px;">All linked minecraft accounts are displayed here.</p>
+                  <% } %>
                 </div>
               </div>
             </div>
