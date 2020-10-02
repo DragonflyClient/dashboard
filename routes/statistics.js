@@ -1,6 +1,8 @@
 const express = require('express')
 const router = express.Router()
 
+const mongoose = require('mongoose')
+const moment = require('moment')
 const axios = require('axios').default
 
 router.get('/ot/total', async (req, res, next) => {
@@ -8,13 +10,19 @@ router.get('/ot/total', async (req, res, next) => {
     const account = await getDragonflyAccount(token)
     const dragonflyUUID = account.uuid
     const statistics = await mongoose.connection.db.collection('statistics').findOne({ dragonflyUUID: dragonflyUUID });
-    const totalPlaytime = statistics.onlineTime.total
+
+    let totalPlaytime = 0
     let monthlyPlaytime = 0
 
-    for (var key in statistics.onlineTime) {
-        if (statistics.onlineTime.hasOwnProperty(key)) {
-            const contains = key.split('/')[0] == new Date().getMonth() + 1
-            if (contains) monthlyPlaytime = statistics.onlineTime[key]
+    // account.creationDate = moment(account.creationDate).format('LL');
+
+    if (statistics) {
+        totalPlaytime = statistics.onlineTime.total
+        for (var key in statistics.onlineTime) {
+            if (statistics.onlineTime.hasOwnProperty(key)) {
+                const contains = key.split('/')[0] == new Date().getMonth() + 1
+                if (contains) monthlyPlaytime = statistics.onlineTime[key]
+            }
         }
     }
 
