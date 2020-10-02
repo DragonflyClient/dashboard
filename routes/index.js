@@ -14,21 +14,9 @@ router.get('/', async (req, res) => {
   const token = req.cookies["dragonfly-token"]
   const account = await getDragonflyAccount(token)
 
-  const linkedMinecraftAccounts = account.linkedMinecraftAccounts
+  const minecraftAccounts = await getLinkedMinecraftAccounts(account.linkedMinecraftAccounts)
 
-  const mcAccounts = []
-  for (let i = 0; i < linkedMinecraftAccounts.length; i++) {
-    console.log(linkedMinecraftAccounts[i])
-    const accountName = await getMinecraftName(linkedMinecraftAccounts[i])
-    const mcAcc = {
-      minecraftName: accountName,
-      uuid: linkedMinecraftAccounts[i],
-    }
-    mcAccounts.push(mcAcc)
-  }
-  console.log(mcAccounts)
-
-  res.render('sites/index', { account: account, linkedMinecraftAccounts: mcAccounts, path: req.path })
+  res.render('sites/index', { account: account, linkedMinecraftAccounts: minecraftAccounts, path: req.path })
 })
 
 router.get('/cosmetics', async (req, res) => {
@@ -50,6 +38,20 @@ async function getDragonflyAccount(token) {
 async function getMinecraftName(uuid) {
   const response = await axios.get(`https://api.minetools.eu/uuid/${uuid}`);
   return response.data.name;
+}
+
+async function getLinkedMinecraftAccounts(linkedMinecraftAccounts) {
+  const mcAccounts = []
+  for (let i = 0; i < linkedMinecraftAccounts.length; i++) {
+    console.log(linkedMinecraftAccounts[i])
+    const accountName = await getMinecraftName(linkedMinecraftAccounts[i])
+    const mcAcc = {
+      minecraftName: accountName,
+      uuid: linkedMinecraftAccounts[i],
+    }
+    mcAccounts.push(mcAcc)
+  }
+  return mcAccounts
 }
 
 // Security while development
