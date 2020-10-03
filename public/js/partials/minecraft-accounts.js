@@ -18,8 +18,14 @@ function unlinkMinecraftAccount(item) {
     })
         .then((res) => res.json())
         .then((data) => {
+            const accountCard = document.getElementById('minecraft-account-card')
             if (data.success) {
-                window.location.reload();
+                if (item.parentElement.parentElement.childElementCount === 2) {
+                    item.parentElement.remove()
+                    accountCard.innerHTML = "<p style=\"padding-top: 10px\">All linked minecraft accounts are displayed here.</p>"
+                } else {
+                    item.parentElement.remove()
+                }
             } else {
                 Swal.fire({
                     title: 'Error',
