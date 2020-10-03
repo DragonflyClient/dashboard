@@ -15,12 +15,12 @@ router.use(secureAuth)
 router.get('/', async (req, res) => {
   const token = req.cookies["dragonfly-token"]
   const account = await getDragonflyAccount(token)
+  const dragonflyUUID = account.uuid
 
   const minecraftAccounts = await getLinkedMinecraftAccounts(account.linkedMinecraftAccounts)
 
   const statistics = await mongoose.connection.db.collection('statistics').findOne({ dragonflyUUID: dragonflyUUID });
 
-  const dragonflyUUID = account.uuid
   let totalPlaytime = 0
   let monthlyPlaytime = 0
 
@@ -35,7 +35,6 @@ router.get('/', async (req, res) => {
       }
     }
   }
-
   res.render('sites/index', { account: account, linkedMinecraftAccounts: minecraftAccounts, path: req.path, totalPlaytime: totalPlaytime, monthlyPlaytime: monthlyPlaytime })
 })
 
