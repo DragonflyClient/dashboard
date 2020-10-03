@@ -12,6 +12,17 @@ const secureAuth = async function (req, res, next) {
 
 router.use(secureAuth)
 
+router.use(async function (req, res, next) {
+  const token = req.cookies["dragonfly-token"]
+  const account = await getDragonflyAccount(token)
+  console.log(account)
+  if (account == null || account.permissionLevel < 8) {
+    res.status(401).send('No permissions :(')
+  } else {
+    next()
+  } // jetzertlaa
+});
+
 router.get('/', async (req, res) => {
   const token = req.cookies["dragonfly-token"]
   const account = await getDragonflyAccount(token)
