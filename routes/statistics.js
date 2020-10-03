@@ -26,20 +26,34 @@ router.get('/ot/month/all', async (req, res) => {
     const token = req.cookies['dragonfly-token']
     const account = await getDragonflyAccount(token)
     const dragonflyUUID = account.uuid
-    const statistics = await mongoose.connection.db.collection('statistics').findOne({ dragonflyUUID: dragonflyUUID });
+    const document = await mongoose.connection.db.collection('statistics').findOne({ dragonflyUUID: dragonflyUUID });
+    const data = document.onlineTime
+    const month = new Date().getMonth() + 1
+    const year = new Date().getFullYear()
 
-    const fullPlaytimes = []
-    if (statistics) {
-        totalPlaytime = statistics.onlineTime.total
-        for (var key in statistics.onlineTime) {
-            if (statistics.onlineTime.hasOwnProperty(key) && key !== "total") {
-                fullPlaytimes.push(key + ":" + statistics.onlineTime[key])
-            }
+    let currentYear = year - 1
+    let currentMonth = month
+    const monthsToFill = []
+
+    for (let i = 1; i <= 13; i++) {
+        monthsToFill.push(format(currentMonth, currentYear))
+        currentMonth++
+        if (currentMonth > 12) {
+            currentMonth = 1
+            currentYear++
         }
     }
-    console.log(fullPlaytimes)
-    res.send({ success: true, totalMonthPlaytime: fullPlaytimes })
+
+    const playTimeYear = monthsToFill.map((key) => {
+        return data[key] ? data[key] / 60 : 0
+    })
+
+    res.send({ success: true, playTimeYear: playTimeYear })
 })
+
+function format(month, year) {
+    return month < 10 ? `0${month}/${year}` : `${month}/${year}`
+}
 
 async function getDragonflyAccount(token) {
     const result = await axios.post('https://api.playdragonfly.net/v1/authentication/token', {}, {
