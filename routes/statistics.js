@@ -13,8 +13,6 @@ router.get('/ot/total', async (req, res, next) => {
 
     let totalPlaytime = 0
 
-    // account.creationDate = moment(account.creationDate).format('LL');
-
     if (statistics) {
         totalPlaytime = statistics.onlineTime.total
     }
