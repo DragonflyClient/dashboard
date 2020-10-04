@@ -8,6 +8,11 @@
   --clr-plight: #ffc247;
 }
 
+.note_coming-soon {
+  margin-top: 20px;
+  text-align: center;
+}
+
 .dropdown-item {
   cursor: pointer;
 }

@@ -110,21 +110,21 @@
                             </div>
                         </div>
 
-                        <!-- Top Minecraft account - Card -->
+                        <!-- Amount of purchases - Card -->
                         <div class="col-xl-4 col-md-6 mb-4">
                             <div class="card border-left-drgn-pdark shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-drgn-pdark text-uppercase mb-1">
-                                                Top Minecraft account
+                                                Amount of purchases
                                             </div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                N/A
+                                                <%= Object.keys(ref).length !== 0 ? ref.count : "0" %>
                                             </div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-gamepad fa-2x text-gray-300"></i>
+                                            <i class="fas fa-sort-amount-up-alt fa-2x text-gray-300"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -132,7 +132,7 @@
                         </div>
 
                         <!-- Account creation date - Card -->
-                        <div class="col-xl-6 col-md-6 mb-4">
+                        <!-- <div class="col-xl-6 col-md-6 mb-4">
                             <div class="card border-left-drgn-primary shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
@@ -153,7 +153,6 @@
                             </div>
                         </div>
 
-                        <!-- Favorite Server - Card -->
                         <div class="col-xl-6 col-md-6 mb-4">
                             <div class="card border-left-info shadow h-100 py-2">
                                 <div class="card-body">
@@ -176,11 +175,12 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
 
                     <!-- Content Row -->
                 </div>
+                <h4 class="note_coming-soon">More coming soon...</h4>
             </div>
         </div>
     </div>
