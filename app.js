@@ -19,6 +19,7 @@ var indexRouter = require('./routes/index');
 var authRouter = require('./routes/authentication');
 var minecraftRouter = require('./routes/minecraft')
 var statisticsRouter = require('./routes/statistics')
+var partnerRouter = require('./routes/partner')
 
 var app = express();
 
@@ -33,10 +34,19 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+const secureAuth = async function (req, res, next) {
+    const dragonflyToken = req.cookies["dragonfly-token"]
+    if (!dragonflyToken) return res.redirect(`https://playdragonfly.net/login?ref=https://dashboard.playdragonfly.net${req.path}`)
+    next()
+}
+
+app.use(secureAuth)
+
 // API ROUTES
 app.use('/auth', authRouter);
 app.use('/minecraft', minecraftRouter)
 app.use('/statistics', statisticsRouter)
+app.use('/partner', partnerRouter)
 
 app.use('/', indexRouter);
 
