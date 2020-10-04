@@ -4,14 +4,6 @@ const axios = require('axios').default;
 const mongoose = require('mongoose')
 const moment = require('moment')
 
-const secureAuth = async function (req, res, next) {
-  const dragonflyToken = req.cookies["dragonfly-token"]
-  if (!dragonflyToken) return res.redirect(`https://playdragonfly.net/login?ref=https://dashboard.playdragonfly.net${req.path}`)
-  next()
-}
-
-router.use(secureAuth)
-
 router.use(async function (req, res, next) {
   const token = req.cookies["dragonfly-token"]
   const account = await getDragonflyAccount(token)
