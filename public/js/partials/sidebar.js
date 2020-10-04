@@ -1,1 +1,1 @@
-document.getElementById(window.location.href.split('/')[window.location.href.split('/').length - 1] || "/").classList.add('active')
+document.getElementById(window.location.pathname.split('/')[window.location.pathname.split('/').length - 1] || "/").classList.add('active')
