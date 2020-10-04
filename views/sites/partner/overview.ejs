@@ -31,7 +31,7 @@
         <%- include('../../partials/sidebar') %>
         <!-- End of Sidebar -->
 
-        <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content-wrapper" style="background-color: #fff !important;" class="d-flex flex-column">
             <!-- Main Content -->
             <div id="content">
                 <!-- Topbar -->
@@ -56,8 +56,8 @@
                                                 <span id="partner-revenue_value"><%= message %></span>
                                                 <% } else { %>
                                                 <span id="partner-revenue_value"><%= ref.amount %></span>
-                                                <% } %>
                                                 <span id="partner-revenue_currency">€</span>
+                                                <% } %>
                                             </div>
                                         </div>
                                         <div class="col-auto">
@@ -88,8 +88,8 @@
                                                     <button class="btn btn-secondary dropdown-toggle" type="button"
                                                         id="partner-income-type-btn" data-toggle="dropdown"
                                                         aria-haspopup="true" aria-expanded="false">
-                                                        <span
-                                                            id="income-type_selected"><%= Object.keys(ref).length !== 0 ? ref.type : "Internal server error. Please try again later" %></span>
+                                                        <span id="income-type_selected"
+                                                            data-selected-income=<%= ref.type || "unlinked" %>><%= ref.type || "N/A" %></span>
                                                     </button>
                                                     <div class="dropdown-menu" id="income-type_dropdown"
                                                         aria-labelledby="dropdownMenuButton">
@@ -190,7 +190,7 @@
     <script src="https://dashboard.playdragonfly.net/vendor/bootstrap/js/bootstrap.bundle.js"></script>
     <script src="https://dashboard.playdragonfly.net/js/overview.partner.js"></script>
     <script src="https://dashboard.playdragonfly.net/js/main.js"></script>
-    <script src="https://dashboard.playdragonfly.net/js/sb-admin-2.min.js"></script>
+    <script src="https://dashboard.playdragonfly.net/js/sb-admin-2.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </body>
 
