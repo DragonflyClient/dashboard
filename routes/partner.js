@@ -25,6 +25,7 @@ router.get('/overview', async (req, res) => {
     refDetails.amount = refBonus.amount
     refDetails.type = refLink.type
     refDetails.creationDate = refBonus.creationDate
+    refDetails.count = refBonus.count
 
     console.log(Object.keys(refDetails).length === 0 && refDetails.constructor === Object)
 
