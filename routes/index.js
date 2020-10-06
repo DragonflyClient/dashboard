@@ -8,11 +8,11 @@ router.use(async function (req, res, next) {
   const token = req.cookies["dragonfly-token"]
   const account = await getDragonflyAccount(token)
   console.log(account)
-  if (account == null || account.permissionLevel < 8) {
-    res.status(401).send('No permissions :(')
+  if (account == null || account.permissionLevel < 6) {
+    res.status(401).render('error', { message: "Insufficient permissions", backUrl: null, error: "insufficient_perms", final: true })
   } else {
     next()
-  } // jetzertlaa
+  }
 });
 
 router.get('/', async (req, res) => {

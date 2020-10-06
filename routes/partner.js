@@ -4,6 +4,18 @@ const router = express.Router()
 const axios = require('axios').default
 const mongoose = require('mongoose')
 
+const requirePerms = async function (req, res, next) {
+    const token = req.cookies["dragonfly-token"]
+    const account = await getDragonflyAccount(token)
+    console.log(req)
+    if (account == null || account.permissionLevel < 7) {
+        res.status(401).render('error', { message: "Insufficient permissions", backUrl: null, error: "insufficient_perms", final: false })
+    } else {
+        next()
+    }
+}
+
+router.use(requirePerms)
 
 router.get('/overview', async (req, res) => {
     const token = req.cookies['dragonfly-token']
