@@ -75,6 +75,40 @@ router.get('/cosmetics', async (req, res) => {
   res.render('sites/cosmetics', { account: account, path: req.path, cosmeticModels: cosmeticModels, cosmetics: dragonflyCosmetics, linkedMinecraftAccounts: minecraftAccounts })
 })
 
+router.get('/settings', async (req, res) => {
+  const token = req.cookies["dragonfly-token"]
+  const account = await getDragonflyAccount(token)
+  const dragonflyUUID = account.uuid
+  const dragonflyCosmetics = await loadCosmetics(dragonflyUUID)
+  console.log(dragonflyCosmetics)
+
+  async function loadCosmetics(uuid) {
+    const result = await axios.get(`https://api.playdragonfly.net/v1/cosmetics/find?dragonfly=${uuid}`, {}, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
+    return result.data.cosmetics
+  }
+
+  const availableCosmetics = await loadAvailableCosmetics()
+
+  async function loadAvailableCosmetics() {
+    const result = await axios.get(`https://api.playdragonfly.net/v1/cosmetics/available`)
+    return result.data.availableCosmetics
+  }
+
+  const cosmeticModels = []
+  for (cosmetic of dragonflyCosmetics) {
+    const model = availableCosmetics.find(element => element.cosmeticId == cosmetic.cosmeticId)
+    cosmeticModels.push(model)
+  }
+
+  const minecraftAccounts = await getLinkedMinecraftAccounts(account.linkedMinecraftAccounts)
+
+  res.render('sites/settings', { account: account, linkedMinecraftAccounts: minecraftAccounts })
+})
+
 async function getDragonflyAccount(token) {
   const result = await axios.post('https://api.playdragonfly.net/v1/authentication/token', {}, {
     headers: {
