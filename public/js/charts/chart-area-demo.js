@@ -140,8 +140,9 @@ let myLineChart = new Chart(ctx, {
     },
   },
 });
-
-loadData()
+window.addEventListener('load', () => {
+  loadData()
+})
 async function loadData() {
   const result = await fetch("https://dashboard.playdragonfly.net/statistics/ot/month/all")
   const json = await result.json()
