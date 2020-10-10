@@ -1,0 +1,15 @@
+.adjust {
+    transition: width .15s;
+}
+.account__username {
+    outline: none;
+    border: none;
+}
+
+.account__username-wrapper {
+    display: flex;
+}
+
+.account__username-icon_check {
+    width: 25px;
+}
