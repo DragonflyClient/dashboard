@@ -66,12 +66,21 @@ router.get('/ref/info', async (req, res) => {
 })
 
 async function getDragonflyAccount(token) {
-    const result = await axios.post('https://api.playdragonfly.net/v1/authentication/token', {}, {
+    let account;
+    await axios.post('https://api.playdragonfly.net/v1/authentication/token', {}, {
         headers: {
             "Authorization": `Bearer ${token}`
         }
     })
-    return result.data
+        .then(result => {
+            console.log(result.data)
+            account = result.data
+        })
+        .catch(err => {
+            if (err) console.log("err")
+        })
+
+    return account
 }
 
 module.exports = router

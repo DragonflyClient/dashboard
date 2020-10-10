@@ -36,7 +36,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 const secureAuth = async function (req, res, next) {
     const dragonflyToken = req.cookies["dragonfly-token"]
-    if (!dragonflyToken) return res.redirect(`https://playdragonfly.net/login?ref=https://dashboard.playdragonfly.net${req.path}`)
+    const dragonflyAccount = await getDragonflyAccount(dragonflyToken)
+    if (!dragonflyToken || !dragonflyAccount) return res.redirect('https://playdragonfly.net/login?ref=https://dashboard.playdragonfly.net');
     next()
 }
 
@@ -49,5 +50,23 @@ app.use('/statistics', statisticsRouter)
 app.use('/partner', partnerRouter)
 
 app.use('/', indexRouter);
+
+async function getDragonflyAccount(token) {
+    let account;
+    await axios.post('https://api.playdragonfly.net/v1/authentication/token', {}, {
+        headers: {
+            "Authorization": `Bearer ${token}`
+        }
+    })
+        .then(result => {
+            console.log(result.data)
+            account = result.data
+        })
+        .catch(err => {
+            if (err) console.log("err")
+        })
+
+    return account
+}
 
 module.exports = app;

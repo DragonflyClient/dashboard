@@ -23,6 +23,7 @@ router.get('/ot/total', async (req, res, next) => {
 router.get('/ot/month/all', async (req, res) => {
     const token = req.cookies['dragonfly-token']
     const account = await getDragonflyAccount(token)
+    console.log(account)
     const dragonflyUUID = account.uuid
     const document = await mongoose.connection.db.collection('statistics').findOne({ dragonflyUUID: dragonflyUUID });
     const data = document.onlineTime
@@ -54,12 +55,21 @@ function format(month, year) {
 }
 
 async function getDragonflyAccount(token) {
-    const result = await axios.post('https://api.playdragonfly.net/v1/authentication/token', {}, {
+    let account;
+    await axios.post('https://api.playdragonfly.net/v1/authentication/token', {}, {
         headers: {
             "Authorization": `Bearer ${token}`
         }
     })
-    return result.data
+        .then(result => {
+            console.log(result.data)
+            account = result.data
+        })
+        .catch(err => {
+            if (err) console.log("err")
+        })
+
+    return account
 }
 
 module.exports = router
