@@ -80,8 +80,43 @@ function checkUsername(event) {
     }
 }
 
-function setUsername(username) {
+async function setUsername(username) {
     console.log("Set username to ", username)
+    const bodyData = {
+        name: username
+    }
+    const result = await fetch('https://api.playdragonfly.net/v1/authentication/rename', {
+        method: "POST",
+        credentials: "include",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(bodyData)
+    })
+    const data = await result.json()
+    console.log(data, "DATA YE")
+    if (data.success) {
+        Swal.fire({
+            icon: 'success',
+            title: 'Nice one!',
+            text: `Username changed to "${username}"`,
+            preConfirm: () => {
+                window.location.reload()
+            }
+        })
+    } else if (data.next) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Damn',
+            text: `You can change your username again ${moment(1603136034547).fromNow()}`,
+        })
+    } else {
+        Swal.fire({
+            icon: 'error',
+            title: 'Whoops.',
+            text: data.error ? data.error : "Something went wrong please try again later.",
+        })
+    }
 }
 
 function validUsername(username) {
