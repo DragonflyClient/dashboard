@@ -6,10 +6,15 @@
     border: none;
 }
 
-.account__username-wrapper {
-    display: flex;
+.account__username:focus {
+    border: 1px solid #5a5c69;
 }
 
+/* .account__username-wrapper {
+    display: flex;
+} */
+
 .account__username-icon_check {
-    width: 25px;
+    width: 20px;
+    margin-top: -7px;
 }
