@@ -21,6 +21,12 @@
   width: 15rem !important;
 }
 
+@media(max-width: 780px) {
+  .navbar-nav {
+    width: 6.5rem !important;
+  }
+}
+
 /* Global vars */
 .bg-gradient-primary {
   background-color: #211b17 !important;
