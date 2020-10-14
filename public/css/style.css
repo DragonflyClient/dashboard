@@ -17,6 +17,10 @@
   cursor: pointer;
 }
 
+.navbar-nav {
+  width: 15rem !important;
+}
+
 /* Global vars */
 .bg-gradient-primary {
   background-color: #211b17 !important;
@@ -194,7 +198,7 @@ hr {
 }
 
 #content-wrapper {
-  margin-left: 224px;
+  margin-left: 240px;
 }
 
 .btn-user,
