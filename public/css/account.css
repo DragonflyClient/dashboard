@@ -17,4 +17,5 @@
 .account__username-icon_check {
     width: 20px;
     margin-top: -7px;
+    pointer-events: none;
 }
