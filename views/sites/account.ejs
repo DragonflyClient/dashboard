@@ -48,7 +48,7 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Account Name
+                                                Dragonfly Account Name
                                             </div>
                                             <label class="account__username-wrapper">
                                                 <input id="account__username-input"
@@ -60,6 +60,31 @@
                                                     <i class="fas fa-pen account__username-icon_check"></i>
                                                 </span>
                                             </label>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-clock fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-md-6 mb-4">
+                            <div class="card border-left-primary shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                Dragonfly UUID
+                                            </div>
+
+                                            <input type="text" id="uuid-input" class="input-hidden"
+                                                value=<%= account.uuid %>>
+                                            <span class="h6 mb-0 font-weight-bold text-gray-800 account__uuid-wrapper">
+                                                <%= account.uuid %>
+                                            </span>
+                                            <span id="account__uuid-copy">
+                                                <i class="fas fa-copy account__uuid-copy_icon"></i>
+                                            </span>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-clock fa-2x text-gray-300"></i>
@@ -107,8 +132,10 @@
         integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
         crossorigin="anonymous"></script>
 
-    <script src="https://unpkg.com/@popperjs/core@2"></script>
-    <script src="https://unpkg.com/tippy.js@6"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.5.3/umd/popper.min.js"
+        integrity="sha512-53CQcu9ciJDlqhK7UD8dZZ+TF2PFGZrOngEYM/8qucuQba+a+BXOIRsp9PoMNJI3ZeLMVNIxIfZLbG/CdHI5PA=="
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/tippy.js@5.2.1/dist/tippy-bundle.iife.min.js"></script>
 
     <script src="https://dashboard.playdragonfly.net/js/sb-admin-2.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>

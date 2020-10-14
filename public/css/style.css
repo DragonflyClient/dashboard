@@ -163,6 +163,25 @@ hr {
   animation-fill-mode: forwards;
 }
 
+.input-hidden {
+  position: fixed;
+  z-index: -2;
+  left: -11111111111111111111px;
+  top: -111111111111111111111px;
+}
+
+.account__uuid-wrapper {
+  margin-right: 7px;
+}
+
+#account__uuid-copy {
+  cursor: pointer;
+}
+
+.account__uuid-copy_icon {
+  pointer-events: none;
+}
+
 @keyframes fadeOut {
   100% {
     opacity: 0;

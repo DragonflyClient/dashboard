@@ -38,6 +38,32 @@ $(function () {
 
 const usernameInput = document.getElementById('account__username-input')
 const usernameIcon = document.getElementById('account__username-icon')
+const uuidCopyBtn = document.getElementById('account__uuid-copy')
+
+const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+})
+
+uuidCopyBtn.addEventListener('click', (e) => {
+    const uuidInput = document.getElementById('uuid-input')
+
+    uuidInput.select();
+    uuidInput.setSelectionRange(0, 99999);
+
+    document.execCommand("copy");
+    Toast.fire({
+        icon: 'success',
+        title: 'UUID copied to clipboard!'
+    })
+})
 
 let newTip;
 let userDiff = false;
