@@ -36,23 +36,28 @@ $(function () {
 });
 
 
-let newTip;
-let userDiff = false;
-const username = document.getElementById('account__username-input')
+const usernameInput = document.getElementById('account__username-input')
 const usernameIcon = document.getElementById('account__username-icon')
 
-username.addEventListener('keyup', (e) => {
+let newTip;
+let userDiff = false;
+let defaultUsername = usernameIcon.previousElementSibling.dataset.defaultUsername;
+
+console.log(defaultUsername)
+
+usernameInput.addEventListener('keyup', (e) => {
     checkUsername(e)
 })
 
 usernameIcon.addEventListener('click', (event) => {
-    const el = event.target
-    if (username.value.trim() !== el.dataset.defaultUsername && userDiff && validUsername(username.value)) return setUsername(username.value)
+    const icon = event.target
+    const el = icon.previousElementSibling
+    if (usernameInput.value.trim() !== el.dataset.defaultUsername && userDiff && validUsername(usernameInput.value)) return setUsername(usernameInput.value)
 })
 
 function checkUsername(event) {
     if (!newTip) {
-        newTip = tippy(username, {
+        newTip = tippy(usernameInput, {
             placement: 'bottom',
             animation: 'perspective',
             content: 'Your Dragonfly username can only contain numbers, uppercase and lowercase letters.', // <--- not an option! set it on the element as an attribute
@@ -60,70 +65,101 @@ function checkUsername(event) {
     }
     const key = event.key
     const el = event.target
-    if (!validUsername(username.value)) {
+    if (!validUsername(usernameInput.value)) {
         newTip.state.isEnabled = true
         newTip.show()
-        username.style.background = "gray"
+        usernameInput.style.background = "gray"
+        return updateIcon('same')
     } else {
         newTip.hide()
         newTip.state.isEnabled = false
-        username.style.background = "white"
+        usernameInput.style.background = "white"
     }
 
-    if (key == "Enter" && username.value.trim() !== el.dataset.defaultUsername) return setUsername(username.value)
-    if (el.dataset.defaultUsername !== username.value.trim()) {
+    if (key == "Enter" && usernameInput.value.trim() !== el.dataset.defaultUsername && userDiff && validUsername(usernameInput.value)) return setUsername(usernameInput.value)
+
+    if (el.dataset.defaultUsername !== usernameInput.value.trim()) {
         userDiff = true
         usernameIcon.innerHTML = '<svg class="account__username-icon_check" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="check" class="svg-inline--fa fa-check fa-w-16" role="img" viewBox="0 0 512 512"><path fill="currentColor" d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"/></svg>'
     } else {
-        userDiff = true
+        userDiff = false
         usernameIcon.innerHTML = '<svg class="account__username-icon_check" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="pen" class="svg-inline--fa fa-pen fa-w-16" role="img" viewBox="0 0 512 512"><path fill="currentColor" d="M290.74 93.24l128.02 128.02-277.99 277.99-114.14 12.6C11.35 513.54-1.56 500.62.14 485.34l12.7-114.22 277.9-277.88zm207.2-19.06l-60.11-60.11c-18.75-18.75-49.16-18.75-67.91 0l-56.55 56.55 128.02 128.02 56.55-56.55c18.75-18.76 18.75-49.16 0-67.91z"/></svg>'
     }
 }
 
 async function setUsername(username) {
-    console.log("Set username to ", username)
     const bodyData = {
         name: username
     }
-    const result = await fetch('https://api.playdragonfly.net/v1/authentication/rename', {
-        method: "POST",
-        credentials: "include",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(bodyData)
-    })
-    const data = await result.json()
-    console.log(data, "DATA YE")
-    if (data.success) {
-        Swal.fire({
-            icon: 'success',
-            title: 'Nice one!',
-            text: `Username changed to "${username}"`,
-            preConfirm: () => {
-                window.location.reload()
+    console.log("Set username to ", username)
+    Swal.fire({
+        title: 'Do you want to save the changes?',
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: `Save`,
+        denyButtonText: `Don't save`,
+    }).then(async (result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+            const result = await fetch('https://api.playdragonfly.net/v1/authentication/rename', {
+                method: "POST",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(bodyData)
+            })
+            const data = await result.json()
+            if (data.success) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Nice one!',
+                    text: `Username changed to "${username}"`
+                })
+                setNewDefault(username)
+            } else if (data.next) {
+                usernameInput.value = defaultUsername
+                console.log(usernameInput.value)
+                updateIcon('same')
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Damn',
+                    text: `You can change your username again ${moment(data.next).fromNow()}`,
+                })
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Whoops.',
+                    text: data.error ? data.error : "Something went wrong please try again later.",
+                })
             }
-        })
-    } else if (data.next) {
-        Swal.fire({
-            icon: 'error',
-            title: 'Damn',
-            text: `You can change your username again ${moment(1603136034547).fromNow()}`,
-        })
+        } else if (result.isDenied) {
+            Swal.fire('Changes are not saved', '', 'info')
+        }
+    })
+}
+
+function setNewDefault(username) {
+    updateIcon('same')
+    defaultUsername = username
+    usernameInput.value = username
+    usernameInput.dataset.defaultUsername = username
+}
+
+function updateIcon(type) {
+    console.log(type)
+    if (type == "different") {
+        usernameIcon.innerHTML = '<svg class="account__username-icon_check" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="check" class="svg-inline--fa fa-check fa-w-16" role="img" viewBox="0 0 512 512"><path fill="currentColor" d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"/></svg>'
     } else {
-        Swal.fire({
-            icon: 'error',
-            title: 'Whoops.',
-            text: data.error ? data.error : "Something went wrong please try again later.",
-        })
+        usernameIcon.innerHTML = '<svg class="account__username-icon_check" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="pen" class="svg-inline--fa fa-pen fa-w-16" role="img" viewBox="0 0 512 512"><path fill="currentColor" d="M290.74 93.24l128.02 128.02-277.99 277.99-114.14 12.6C11.35 513.54-1.56 500.62.14 485.34l12.7-114.22 277.9-277.88zm207.2-19.06l-60.11-60.11c-18.75-18.75-49.16-18.75-67.91 0l-56.55 56.55 128.02 128.02 56.55-56.55c18.75-18.76 18.75-49.16 0-67.91z"/></svg>'
     }
 }
 
 function validUsername(username) {
     const match = username.match(/[a-zA-Z0-9]*/)
-    if (match[0] !== username) {
-        return false
-    } else {
+    if (match[0] === username && username.length >= 4 && username.length <= 16) {
         return true
+    } else {
+        return false
     }
 }
