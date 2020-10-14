@@ -197,6 +197,11 @@ hr {
   margin-left: 105px;
 }
 
+.navbar-nav.top-navbar {
+  display: flex;
+  justify-content: flex-end;
+}
+
 #content-wrapper {
   margin-left: 240px;
 }
