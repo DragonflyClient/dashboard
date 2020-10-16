@@ -48,21 +48,45 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Dragonfly Account Name
+                                                Dragonfly username
                                             </div>
-                                            <label class="account__username-wrapper">
-                                                <input id="account__username-input"
-                                                    class="h5 mb-0 font-weight-bold text-gray-800 account__username adjust"
-                                                    minlength="4" maxlength="16" type="text"
-                                                    value=<%= account.username %>
-                                                    data-default-username=<%= account.username %>>
-                                                <span id="account__username-icon">
+                                            <label class="account__wrapper">
+                                                <input data-input-type="username"
+                                                    class="account__input h5 mb-0 font-weight-bold text-gray-800 account__username adjust"
+                                                    minlength="4" type="text" value=<%= account.username %>
+                                                    data-default=<%= account.username %>>
+                                                <span class="account__input-icon">
+                                                    <i class="fas fa-pen account__username-icon"></i>
+                                                </span>
+                                            </label>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-envelope fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-md-6 mb-4">
+                            <div class="card border-left-primary shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                Email address
+                                            </div>
+                                            <label class="account__wrapper">
+                                                <input data-input-type="email"
+                                                    class="account__input h5 mb-0 font-weight-bold text-gray-800 account__username adjust"
+                                                    minlength="4" type="text" value=<%= account.email %>
+                                                    data-default=<%= account.email %>>
+                                                <span class="account__input-icon">
                                                     <i class="fas fa-pen account__username-icon_check"></i>
                                                 </span>
                                             </label>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-clock fa-2x text-gray-300"></i>
+                                            <i class="fas fa-envelope fa-2x text-gray-300"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -87,7 +111,7 @@
                                             </span>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-clock fa-2x text-gray-300"></i>
+                                            <i class="fas fa-fingerprint fa-2x text-gray-300"></i>
                                         </div>
                                     </div>
                                 </div>

@@ -14,7 +14,7 @@
     display: flex;
 } */
 
-.account__username-icon_check {
+.account__username-icon {
     width: 20px;
     margin-top: -7px;
     pointer-events: none;
