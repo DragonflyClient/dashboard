@@ -79,9 +79,9 @@
                                                 <input data-input-type="email"
                                                     class="account__input h5 mb-0 font-weight-bold text-gray-800 account__username adjust"
                                                     minlength="4" type="text" value=<%= account.email %>
-                                                    data-default=<%= account.email %>>
+                                                    data-input-type="email" data-default=<%= account.email %>>
                                                 <span class="account__input-icon">
-                                                    <i class="fas fa-pen account__username-icon_check"></i>
+                                                    <i class="fas fa-pen account__username-icon"></i>
                                                 </span>
                                             </label>
                                         </div>
@@ -106,12 +106,56 @@
                                             <span class="h6 mb-0 font-weight-bold text-gray-800 account__uuid-wrapper">
                                                 <%= account.uuid %>
                                             </span>
-                                            <span id="account__uuid-copy">
+                                            <span id="account__uuid-copy" onclick="copyUUID()">
                                                 <i class="fas fa-copy account__uuid-copy_icon"></i>
                                             </span>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-fingerprint fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!-- Account creation date - Card -->
+                        <div class="col-xl-6 col-md-6 mb-4">
+                            <div class="card border-left-drgn-primary shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-drgn-primary text-uppercase mb-1">
+                                                Account creation date
+                                            </div>
+                                            <div id="dragonfly-account-creation-date"
+                                                class="h5 mb-0 font-weight-bold text-gray-800">
+                                                <%= account.creationDate %>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-plus fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Account rank - Card -->
+                        <div class="col-xl-6 col-md-6 mb-4">
+                            <div class="card border-left-drgn-primary shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-drgn-primary text-uppercase mb-1">
+                                                Dragonfly rank
+                                            </div>
+                                            <div id="dragonfly-account-creation-date"
+                                                class="h5 mb-0 font-weight-bold text-gray-800">
+                                                <%= account.rank %>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-plus fa-2x text-gray-300"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -142,7 +186,7 @@
 
                     <!-- Content Row -->
                 </div>
-                <h4 class="note_coming-soon">More coming soon...</h4>
+                <!-- <h4 class="note_coming-soon">More coming soon...</h4> -->
             </div>
         </div>
     </div>
