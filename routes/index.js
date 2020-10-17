@@ -78,6 +78,7 @@ router.get('/cosmetics', async (req, res) => {
 router.get('/account', async (req, res) => {
   const token = req.cookies["dragonfly-token"]
   const account = await getDragonflyAccount(token)
+  account.creationDate = moment(account.creationDate).format('LL');
   const dragonflyUUID = account.uuid
   console.log(dragonflyUUID, "uuid")
   // const dragonflyCosmetics = await loadCosmetics(dragonflyUUID)
@@ -104,6 +105,23 @@ router.get('/account', async (req, res) => {
   //   const model = availableCosmetics.find(element => element.cosmeticId == cosmetic.cosmeticId)
   //   cosmeticModels.push(model)
   // }
+
+  const ranks = {
+    0: "Player",
+    6: "Contributor",
+    7: "Partner",
+    8: "Moderator",
+    9: "Developer",
+    10: "Operator/Manager"
+  };
+  const permissionLevel = account.permissionLevel;
+
+  Object.keys(ranks).map(function (key, index) {
+    if (key == permissionLevel) {
+      account.rank = ranks[key]
+    }
+  });
+  console.log(account)
 
   const minecraftAccounts = await getLinkedMinecraftAccounts(account.linkedMinecraftAccounts)
 
