@@ -2,22 +2,28 @@ var express = require('express');
 var router = express.Router();
 const axios = require('axios').default;
 const mongoose = require('mongoose')
-const moment = require('moment')
+const moment = require('moment');
 
-router.use(async function (req, res, next) {
+const BASE_API_URL = 'http://localhost:1414'
+
+const secureAuth = async (req, res, next) => {
+  console.log('right')
   const token = req.cookies["dragonfly-token"]
+  console.log(token, "TOKEn")
   const account = await getDragonflyAccount(token)
-  console.log(account)
-  if (account == null || account.permissionLevel < 6) {
-    res.status(401).render('error', { message: "Insufficient permissions", backUrl: null, error: "insufficient_perms", final: true })
-  } else {
-    next()
+  console.log(account, "middle")
+  if (account == null) {
+    return res.status(401).render('error', { message: "Error while authenticating. Please try again later.", backUrl: null, error: "auth_timeout", final: true })
   }
-});
+  req.account = account
+  next()
+}
+
+router.use(secureAuth)
 
 router.get('/', async (req, res) => {
   const token = req.cookies["dragonfly-token"]
-  const account = await getDragonflyAccount(token)
+  const account = req.account
   const dragonflyUUID = account.uuid
 
   const minecraftAccounts = await getLinkedMinecraftAccounts(account.linkedMinecraftAccounts)
@@ -43,26 +49,29 @@ router.get('/', async (req, res) => {
 
 router.get('/cosmetics', async (req, res) => {
   const token = req.cookies["dragonfly-token"]
-  const account = await getDragonflyAccount(token)
+  const account = req.account
   const dragonflyUUID = account.uuid
   const dragonflyCosmetics = await loadCosmetics(dragonflyUUID)
   console.log(dragonflyCosmetics)
 
   async function loadCosmetics(uuid) {
-    const result = await axios.get(`https://api.playdragonfly.net/v1/cosmetics/find?dragonfly=${uuid}`, {}, {
+    const result = await axios.get(`${BASE_API_URL}/v1/cosmetics/find?dragonfly=${uuid}`, {}, {
       headers: {
         'Authorization': `Bearer ${token}`
       }
     })
     return result.data.cosmetics
   }
+  console.log(loadAvailableCosmetics, "LOAD")
 
   const availableCosmetics = await loadAvailableCosmetics()
 
   async function loadAvailableCosmetics() {
-    const result = await axios.get(`https://api.playdragonfly.net/v1/cosmetics/available`)
+    const result = await axios.get(`${BASE_API_URL}/v1/cosmetics/available`)
     return result.data.availableCosmetics
   }
+
+  console.log(loadAvailableCosmetics, "AVAILABLE")
 
   const cosmeticModels = []
   for (cosmetic of dragonflyCosmetics) {
@@ -77,7 +86,7 @@ router.get('/cosmetics', async (req, res) => {
 
 router.get('/account', async (req, res) => {
   const token = req.cookies["dragonfly-token"]
-  const account = await getDragonflyAccount(token)
+  const account = req.account
   account.creationDate = moment(account.creationDate).format('LL');
   const dragonflyUUID = account.uuid
   console.log(dragonflyUUID, "uuid")
@@ -130,7 +139,8 @@ router.get('/account', async (req, res) => {
 
 async function getDragonflyAccount(token) {
   let account;
-  await axios.post('https://api.playdragonfly.net/v1/authentication/token', {}, {
+  await axios.post(`${BASE_API_URL}/v1/authentication/token`, {}, {
+    timeout: 6000,
     headers: {
       "Authorization": `Bearer ${token}`
     }
@@ -139,7 +149,10 @@ async function getDragonflyAccount(token) {
       account = result.data
     })
     .catch(err => {
-      if (err) console.log("err")
+      console.log(err)
+      if (err) {
+        console.log(err)
+      }
     })
 
   return account
