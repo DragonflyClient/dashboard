@@ -3,10 +3,12 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const cors = require('cors')
+const compression = require('compression')
 
 const mongoose = require('mongoose')
+const BASE_API_URL = 'http://localhost:1414'
 
-mongoose.connect(`mongodb://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@45.85.219.34:27017/dragonfly`,
+mongoose.connect(`mongodb://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@localhost:27017/dragonfly`,
     { useNewUrlParser: true, useUnifiedTopology: true },
     console.log('Connected to DB'))
 
@@ -21,6 +23,7 @@ var statisticsRouter = require('./routes/statistics')
 var partnerRouter = require('./routes/partner')
 
 var app = express();
+app.use(compression())
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -31,7 +34,7 @@ app.use(cors({ credentials: true }))
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public'), { maxAge: '5000' }));
 
 const secureAuth = async function (req, res, next) {
     const dragonflyToken = req.cookies["dragonfly-token"]
@@ -52,17 +55,20 @@ app.use('/', indexRouter);
 
 async function getDragonflyAccount(token) {
     let account;
-    await axios.post('https://api.playdragonfly.net/v1/authentication/token', {}, {
+    await axios.post(`${BASE_API_URL}/v1/authentication/token`, {}, {
+        timeout: 6000,
         headers: {
             "Authorization": `Bearer ${token}`
         }
     })
         .then(result => {
-            console.log(result.data)
             account = result.data
         })
         .catch(err => {
-            if (err) console.log("err")
+            console.log(err)
+            if (err) {
+                console.log(err)
+            }
         })
 
     return account
