@@ -44,7 +44,7 @@
           <!-- Content Row -->
           <div class="row" style="width: 100%;">
             <!-- Playtime (Total) Card -->
-            <div class="col-xl-4 col-md-6 mb-4">
+            <div class="col-xl-6 col-md-6 mb-4">
               <div class="card border-left-primary shadow h-100 py-2">
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
@@ -67,7 +67,7 @@
             </div>
 
             <!-- Playtime (Monthly) - Card -->
-            <div class="col-xl-4 col-md-6 mb-4">
+            <div class="col-xl-6 col-md-6 mb-4">
               <div class="card border-left-success shadow h-100 py-2">
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
@@ -111,7 +111,7 @@
             </div> -->
 
             <!-- Favorite Server - Card -->
-            <div class="col-xl-4 col-md-4 mb-4">
+            <!-- <div class="col-xl-4 col-md-4 mb-4">
               <div class="card border-left-info shadow h-100 py-2">
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
@@ -122,7 +122,7 @@
                       <div class="row no-gutters align-items-center">
                         <div class="col-auto">
                           <div class="h5 mb-0 font-weight-bold text-gray-800">
-                            royalpixels.de
+                            N/A
                           </div>
                         </div>
                       </div>
@@ -133,14 +133,14 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
           </div>
 
           <!-- Content Row -->
 
           <div class="row">
             <!-- Area Chart -->
-            <div class="col-xl-8 col-lg-7">
+            <div class="col-xl-12 col-lg-12">
               <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -181,9 +181,9 @@
             </div>
 
             <!-- Pie Chart -->
-            <div class="col-xl-4 col-lg-5">
+            <!-- <div class="col-xl-4 col-lg-5">
               <div class="card shadow mb-4">
-                <!-- Card Header - Dropdown -->
+                <-- Card Header - Dropdown ->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">
                     Most played servers (h)
@@ -203,7 +203,7 @@
                     </div>
                   </div>
                 </div>
-                <!-- Card Body -->
+                <-- Card Body ->
                 <div class="card-body">
                   <div class="chart-pie pt-4 pb-2">
                     <div class="chartjs-size-monitor">
@@ -221,69 +221,7 @@
                   <div id="server-pie"></div>
                 </div>
               </div>
-            </div>
-          </div>
-
-          <!-- Content Row -->
-          <div class="row">
-            <div class="col-lg-6 mb-4">
-              <!-- Project Card Example -->
-              <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">
-                    Minecraft Accounts
-                  </h6>
-                </div>
-                <div class="card-body minecraft-account-card" id="minecraft-account-card">
-                  <% if(linkedMinecraftAccounts.length >= 1) { %>
-                  <%- include('../partials/minecraft-accounts', { linkedMinecraftAccounts: linkedMinecraftAccounts }) %>
-                  <% } else { %>
-                  <p style="padding-top: 10px;">All linked minecraft accounts are displayed here.</p>
-                  <% } %>
-                </div>
-              </div>
-            </div>
-            <!-- Content Column -->
-            <div class="col-lg-6 mb-4">
-              <!-- Project Card Example -->
-              <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">
-                    State Of Development
-                  </h6>
-                </div>
-                <div class="card-body">
-                  <h4 class="small font-weight-bold">
-                    Custom Splash Screen
-                    <span class="float-right">Complete</span>
-                  </h4>
-                  <div class="progress mb-4">
-                    <div class="progress-bar bg-danger" role="progressbar" style="width: 100%;" aria-valuenow="100"
-                      aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                  <h4 class="small font-weight-bold">Toast Messages <span class="float-right">EAP</span></h4>
-                  <div class="progress mb-4">
-                    <div class="progress-bar bg-warning" role="progressbar" style="width: 100%;" aria-valuenow="100"
-                      aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                  <h4 class="small font-weight-bold">Hot Actions <span class="float-right">EAP</span></h4>
-                  <div class="progress mb-4">
-                    <div class="progress-bar" role="progressbar" style="width: 100%;" aria-valuenow="100"
-                      aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                  <h4 class="small font-weight-bold">Hot Keys <span class="float-right">60%</span></h4>
-                  <div class="progress mb-4">
-                    <div class="progress-bar bg-info" role="progressbar" style="width: 60%;" aria-valuenow="60"
-                      aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                  <h4 class="small font-weight-bold">Design Rework <span class="float-right">5%</span></h4>
-                  <div class="progress">
-                    <div class="progress-bar bg-success" role="progressbar" style="width: 5%;" aria-valuenow="5"
-                      aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            </div> -->
           </div>
         </div>
         <!-- /.container-fluid -->
@@ -321,7 +259,7 @@
   <script src="https://dashboard.playdragonfly.net/js/sb-admin-2.js"></script>
 
   <!-- Sweet alert -->
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script> -->
 
   <!-- Page level plugins -->
   <script src="vendor/chart.js/Chart.bundle.js"></script>
@@ -333,7 +271,7 @@
 
   <!-- Page level custom scripts -->
   <script src="https://dashboard.playdragonfly.net/js/charts/chart-area-demo.js"></script>
-  <script src="https://dashboard.playdragonfly.net/js/charts/chart-pie-demo.js"></script>
+  <!-- <script src="https://dashboard.playdragonfly.net/js/charts/chart-pie-demo.js"></script> -->
   <script src="https://dashboard.playdragonfly.net/js/dashboard.js" defer></script>
   <script src="https://dashboard.playdragonfly.net/js/main.js"></script>
 </body>

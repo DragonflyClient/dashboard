@@ -20,7 +20,7 @@
         rel="stylesheet" />
 
     <!-- Custom styles for this template-->
-    <link href="https://dashboard.playdragonfly.net/css/sb-admin-2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://dashboard.playdragonfly.net/css/sb-admin-2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://dashboard.playdragonfly.net/css/style.css" />
 </head>
 
@@ -52,7 +52,7 @@
                                             </div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800"
                                                 id="partner-revenue_wrapper">
-                                                <% if(Object.keys(ref).length === 0) { %>
+                                                <% if(!ref || Object.keys(ref).length === 0) { %>
                                                 <span id="partner-revenue_value"><%= message %></span>
                                                 <% } else { %>
                                                 <span id="partner-revenue_value"><%= ref.amount %></span>
@@ -65,7 +65,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <% if(Object.keys(ref).length !== 0 && ref.type == "discount") { %>
+                                <% if(!ref || Object.keys(ref).length !== 0 && ref.type == "discount") { %>
                                 <p class="small" id="partner-revenue_discount-note">While using "discount"
                                     as the
                                     income mode, your
