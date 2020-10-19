@@ -21,6 +21,10 @@
   width: 15rem !important;
 }
 
+.nav-link, .nav-item {
+  cursor: pointer;
+}
+
 @media(max-width: 780px) {
   .navbar-nav {
     width: 6.5rem !important;
