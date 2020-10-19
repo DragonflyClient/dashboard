@@ -23,35 +23,33 @@ var statisticsRouter = require('./routes/statistics')
 var partnerRouter = require('./routes/partner')
 
 var app = express();
-app.use(compression())
+app.use(express.static(path.join(__dirname, 'public')));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-app.use(logger('dev'));
 app.use(cors({ credentials: true }))
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public'), { maxAge: '5000' }));
 
-const secureAuth = async function (req, res, next) {
-    const dragonflyToken = req.cookies["dragonfly-token"]
-    const dragonflyAccount = await getDragonflyAccount(dragonflyToken)
-    if (!dragonflyToken || !dragonflyAccount) return res.redirect('https://playdragonfly.net/login?ref=https://dashboard.playdragonfly.net');
-    next()
-}
+// const secureAuth = async function (req, res, next) {
+//     const dragonflyToken = req.cookies["dragonfly-token"]
+//     const dragonflyAccount = await getDragonflyAccount(dragonflyToken)
+//     if (!dragonflyToken || !dragonflyAccount) return res.redirect('https://playdragonfly.net/login?ref=https://dashboard.playdragonfly.net');
+//     next()
+// }
 
-app.use(secureAuth)
+// app.use(secureAuth)
 
 // API ROUTES
+app.use(compression())
+app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/minecraft', minecraftRouter)
 app.use('/statistics', statisticsRouter)
 app.use('/partner', partnerRouter)
-
-app.use('/', indexRouter);
 
 async function getDragonflyAccount(token) {
     let account;

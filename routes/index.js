@@ -10,10 +10,11 @@ const secureAuth = async (req, res, next) => {
   console.log('right')
   const token = req.cookies["dragonfly-token"]
   console.log(token, "TOKEn")
+  if (!token) return res.redirect('https://playdragonfly.net/login?ref=https://dashboard.playdragonfly.net')
   const account = await getDragonflyAccount(token)
   console.log(account, "middle")
   if (account == null) {
-    return res.status(401).render('error', { message: "Error while authenticating. Please try again later.", backUrl: null, error: "auth_timeout", final: true })
+    return res.status(401).render('error', { message: "Error while authenticating. Please try again later or login", backUrl: null, error: "auth_timeout", final: true })
   }
   req.account = account
   next()
@@ -44,7 +45,9 @@ router.get('/', async (req, res) => {
       }
     }
   }
-  res.render('sites/index', { account: account, linkedMinecraftAccounts: minecraftAccounts, path: req.path, totalPlaytime: totalPlaytime, monthlyPlaytime: monthlyPlaytime })
+  console.log('backend done')
+  res.render('sites/index', { account: account, totalPlaytime: totalPlaytime, monthlyPlaytime: monthlyPlaytime })
+  res.end()
 })
 
 router.get('/cosmetics', async (req, res) => {
