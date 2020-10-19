@@ -196,3 +196,39 @@ function copyUUID() {
         title: 'UUID copied to clipboard!'
     })
 }
+
+const cosmeticTokenSubmit = document.getElementById('cosmetic-token-submit')
+const cosmeticTokenForm = document.getElementById('cosmetic-token-form')
+
+cosmeticTokenSubmit.addEventListener('click', async (e) => {
+    e.preventDefault()
+    cosmeticTokenSubmit.setAttribute('disabled', true)
+    var formData = new FormData(cosmeticTokenForm)
+    const submitData = {}
+    for (var [key, value] of formData.entries()) {
+        console.log(key, value);
+        submitData[key] = value
+    }
+    console.log(submitData)
+    const result = await fetch(`https://api.playdragonfly.net/v1/cosmetics/token/${submitData.token}`, {
+        "method": "POST",
+        "credentials": "include"
+    })
+    const responseData = await result.json()
+    console.log(responseData)
+    cosmeticTokenSubmit.removeAttribute('disabled')
+    if (responseData.success) {
+        document.getElementById('cosmetic-token-input').value = ""
+        Swal.fire({
+            icon: 'success',
+            title: 'Nice!',
+            text: responseData.message ? responseData.message : `Token successfully redeemed. Check your cosmetic!`,
+        })
+    } else {
+        Swal.fire({
+            icon: 'error',
+            title: 'Whoops.',
+            text: responseData.error ? responseData.error : "Something went wrong please try again later.",
+        })
+    }
+})
