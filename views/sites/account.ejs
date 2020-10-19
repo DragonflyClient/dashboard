@@ -77,10 +77,14 @@
                                             <label class="account__wrapper">
                                                 <input data-input-type="email"
                                                     class="account__input h5 mb-0 font-weight-bold text-gray-800 account__username adjust"
-                                                    minlength="4" type="text" value=<%= account.email %>
-                                                    data-input-type="email" data-default=<%= account.email %>>
+                                                    minlength="4" type="text" value=<%= account.email || "Add" %>
+                                                    data-input-type="email" data-default=<%= account.email ||"Add" %>>
                                                 <span class="account__input-icon">
+                                                    <% if(account.email == 'data-input-type="email"' || !account.email ) { %>
+                                                    <i class="fas fa-plus"></i>
+                                                    <% } else { %>
                                                     <i class="fas fa-pen account__username-icon"></i>
+                                                    <% } %>
                                                 </span>
                                             </label>
                                         </div>
@@ -164,7 +168,7 @@
 
                     <!-- Content Row -->
                     <div class="row" style="width: 100%;">
-                        <div class="col-lg-12 mb-4">
+                        <div class="col-lg-6 mb-4">
                             <!-- Project Card Example -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
@@ -178,6 +182,27 @@
                                     <% } else { %>
                                     <p style="padding-top: 10px;">All linked minecraft accounts are displayed here.</p>
                                     <% } %>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 mb-4">
+                            <!-- Project Card Example -->
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-drgn-primary">
+                                        Redeem cosmetic token
+                                    </h6>
+                                </div>
+                                <div class="card-body">
+                                    <form id="cosmetic-token-form">
+                                        <div class="input-group mb-3">
+                                            <input type="text" name="token" id="cosmetic-token-input"
+                                                placeholder="CSM-XXXXXX-XXXXXX" autocomplete="off" class="form-control"
+                                                aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                                        </div>
+                                        <button type="submit" id="cosmetic-token-submit" style="width: 100%;"
+                                            class="btn btn-primary">Redeem</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
