@@ -1,3 +1,26 @@
+const urlParams = new URLSearchParams(window.location.search);
+
+window.addEventListener('load', () => {
+    const screenSize = window.innerWidth < 1000 ? "mobile" : "desktop"
+    if (urlParams.get('red') === "redeem") {
+        const targetElement = document.getElementById('redeem-cosmetic-wrapper')
+        const posY = targetElement.getBoundingClientRect().top
+        console.log(posY)
+        document.getElementsByTagName("html")[0].style.scrollBehavior = "smooth"
+        setTimeout(() => {
+            window.scrollBy(0, posY)
+            document.getElementsByTagName("html")[0].style.scrollBehavior = "auto"
+        }, 0);
+        if (screenSize == "mobile") {
+            setTimeout(() => {
+                targetElement.classList.add('animate-pop')
+            }, 550);
+        } else {
+            targetElement.classList.add('animate-pop')
+        }
+    }
+})
+
 function adjust(elements, offset, min, max) {
     // initialize parameters
     offset = offset || 0;
@@ -209,26 +232,34 @@ cosmeticTokenSubmit.addEventListener('click', async (e) => {
         console.log(key, value);
         submitData[key] = value
     }
-    console.log(submitData)
-    const result = await fetch(`https://api.playdragonfly.net/v1/cosmetics/token/${submitData.token}`, {
-        "method": "POST",
-        "credentials": "include"
-    })
-    const responseData = await result.json()
-    console.log(responseData)
-    cosmeticTokenSubmit.removeAttribute('disabled')
-    if (responseData.success) {
-        document.getElementById('cosmetic-token-input').value = ""
-        Swal.fire({
-            icon: 'success',
-            title: 'Nice!',
-            text: responseData.message ? responseData.message : `Token successfully redeemed. Check your cosmetic!`,
+    if (submitData.token !== "") {
+        const result = await fetch(`https://api.playdragonfly.net/v1/cosmetics/token/${submitData.token}`, {
+            "method": "POST",
+            "credentials": "include"
         })
+        const responseData = await result.json()
+        console.log(responseData)
+        cosmeticTokenSubmit.removeAttribute('disabled')
+        if (responseData.success) {
+            document.getElementById('cosmetic-token-input').value = ""
+            Swal.fire({
+                icon: 'success',
+                title: 'Nice!',
+                text: responseData.message ? responseData.message : `Token successfully redeemed. Check your cosmetic!`,
+            })
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Whoops.',
+                text: responseData.error ? responseData.error : "Something went wrong please try again later.",
+            })
+        }
     } else {
+        cosmeticTokenSubmit.removeAttribute('disabled')
         Swal.fire({
             icon: 'error',
-            title: 'Whoops.',
-            text: responseData.error ? responseData.error : "Something went wrong please try again later.",
+            title: 'Oh oh',
+            text: "That's an interesting token :)",
         })
     }
 })
