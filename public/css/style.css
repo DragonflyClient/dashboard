@@ -13,6 +13,22 @@
   text-align: center;
 }
 
+.animate-pop {
+  animation: pop .7s;
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
 .dropdown-item {
   cursor: pointer;
 }
@@ -21,8 +37,25 @@
   width: 15rem !important;
 }
 
+.drgn-link {
+  color: var(--clr-primary);
+}
+
+.drgn-link:hover {
+  color: var(--clr-plight);
+}
+
 .nav-link, .nav-item {
   cursor: pointer;
+}
+
+.cosmetics-empty__wrapper {
+  text-align: center; 
+  width: 100%; 
+  margin-top: 50px;
+}
+.cosmetics-empty__desc {
+  margin-top: 25px;
 }
 
 @media(max-width: 780px) {
