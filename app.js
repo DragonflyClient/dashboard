@@ -21,6 +21,7 @@ var authRouter = require('./routes/authentication');
 var minecraftRouter = require('./routes/minecraft')
 var statisticsRouter = require('./routes/statistics')
 var partnerRouter = require('./routes/partner')
+var linkRouter = require('./routes/link')
 
 var app = express();
 app.use(express.static(path.join(__dirname, 'public')));
@@ -50,6 +51,7 @@ app.use('/auth', authRouter);
 app.use('/minecraft', minecraftRouter)
 app.use('/statistics', statisticsRouter)
 app.use('/partner', partnerRouter)
+app.use('/link', linkRouter)
 
 async function getDragonflyAccount(token) {
     let account;
