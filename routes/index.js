@@ -7,12 +7,11 @@ const moment = require('moment');
 const BASE_API_URL = 'http://localhost:1414'
 
 const secureAuth = async (req, res, next) => {
-  console.log('right')
+  console.log('index route')
   const token = req.cookies["dragonfly-token"]
   console.log(token, "TOKEn")
   if (!token) return res.redirect('https://playdragonfly.net/login?ref=https://dashboard.playdragonfly.net')
   const account = await getDragonflyAccount(token)
-  console.log(account, "middle")
   if (account == null) {
     return res.status(401).render('error', { message: "Error while authenticating. Please try again later or login", backUrl: null, error: "auth_timeout", final: true })
   }
@@ -92,31 +91,13 @@ router.get('/account', async (req, res) => {
   const account = req.account
   account.creationDate = moment(account.creationDate).format('LL');
   const dragonflyUUID = account.uuid
-  console.log(dragonflyUUID, "uuid")
-  // const dragonflyCosmetics = await loadCosmetics(dragonflyUUID)
-  // console.log(dragonflyCosmetics)
 
-  // async function loadCosmetics(uuid) {
-  //   const result = await axios.get(`https://api.playdragonfly.net/v1/cosmetics/find?dragonfly=${uuid}`, {}, {
-  //     headers: {
-  //       'Authorization': `Bearer ${token}`
-  //     }
-  //   })
-  //   return result.data.cosmetics
-  // }
-
-  // const availableCosmetics = await loadAvailableCosmetics()
-
-  // async function loadAvailableCosmetics() {
-  //   const result = await axios.get(`https://api.playdragonfly.net/v1/cosmetics/available`)
-  //   return result.data.availableCosmetics
-  // }
-
-  // const cosmeticModels = []
-  // for (cosmetic of dragonflyCosmetics) {
-  //   const model = availableCosmetics.find(element => element.cosmeticId == cosmetic.cosmeticId)
-  //   cosmeticModels.push(model)
-  // }
+  const spotifyInfo = await axios.get('https://dashboard.playdragonfly.net/link/info/spotify', {
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  }, {})
+  console.log(spotifyInfo.data, "S")
 
   const ranks = {
     0: "Player",
@@ -133,11 +114,10 @@ router.get('/account', async (req, res) => {
       account.rank = ranks[key]
     }
   });
-  console.log(account)
 
   const minecraftAccounts = await getLinkedMinecraftAccounts(account.linkedMinecraftAccounts)
 
-  res.render('sites/account', { account: account, linkedMinecraftAccounts: minecraftAccounts })
+  res.render('sites/account', { account: account, linkedMinecraftAccounts: minecraftAccounts, spotifyInfo: spotifyInfo.data })
 })
 
 async function getDragonflyAccount(token) {
