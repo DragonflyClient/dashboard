@@ -30,10 +30,13 @@ var scopes = [
 var showDialog = true;
 
 const secureAuth = async (req, res, next) => {
-    const token = req.cookies["dragonfly-token"]
-    if (!token) return res.redirect('https://playdragonfly.net/login?ref=https://dashboard.playdragonfly.net/account')
+    console.log('link req')
+    console.log(req.headers, "headers")
+    const token = req.cookies['dragonfly-token'] || req.headers.authorization.split(' ')[1]
+    console.log(token, "token")
+    if (!token) return res.send({ success: false, message: "Please login" })
     const account = await getDragonflyAccount(token)
-    console.log(account, "middle")
+    console.log(account, "middl!!e")
     if (account == null) {
         return res.status(401).render('error', { message: "Error while authenticating. Please try again later or login", backUrl: null, error: "auth_timeout", final: true })
     }
@@ -43,12 +46,50 @@ const secureAuth = async (req, res, next) => {
 
 router.use(secureAuth)
 
-router.get('/spotify', (req, res) => {
+router.get('/info/spotify', async (req, res) => {
+    console.log('request link')
+    const account = req.account
+    const accountLink = await AccountLink.findOne({ dragonflyUUID: account.uuid })
+    if (!accountLink) return res.send({ success: false, message: "Dragonfly account not linked to Spotify" })
+    const loggedInSpotifyApi = new SpotifyWebApi({
+        clientId: process.env.SPOTIFY_CLIENT_ID,
+        clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
+        redirectUri: `https://dashboard.playdragonfly.net/link/callback`,
+    });
+    loggedInSpotifyApi.setAccessToken(accountLink.access_token)
+    loggedInSpotifyApi.setRefreshToken(accountLink.refresh_token)
+    let result;
+    loggedInSpotifyApi.getMe()
+        .then(function (data) {
+            res.send(data.body)
+        }, function (err) {
+            loggedInSpotifyApi.refreshAccessToken().then(
+                async function (data) {
+                    console.log('The access token has been refreshed!');
+
+                    // Save the access token so that it's used in future calls
+                    spotifyApi.setAccessToken(data.body['access_token']);
+                    await AccountLink.findOneAndUpdate({ dragonflyUUID: account.uuid }, { $set: { access_token: data.body['access_token'] } })
+                    result = await loggedInSpotifyApi.getMe()
+                },
+                function (err) {
+                    console.log('Could not refresh access token', err);
+                }
+            );
+        })
+    return result
+})
+
+router.get('/spotify', async (req, res) => {
+    const token = req.cookies["dragonfly-token"]
+    const account = req.account
+    const accountLink = await AccountLink.findOne({ dragonflyUUID: account.uuid })
+    if (accountLink) return res.send({ success: false, message: "Already linked" })
     var authorizeURL = spotifyApi.createAuthorizeURL(scopes, null, showDialog);
     res.redirect(authorizeURL);
 })
 
-router.get('/callback', (req, res) => {
+router.get('/callback', async (req, res) => {
     const token = req.cookies["dragonfly-token"]
     const account = req.account
     const authorizationCode = req.query.code
@@ -63,7 +104,7 @@ router.get('/callback', (req, res) => {
                 refresh_token: refreshToken
             })
             const saved = await newAccountLink.save()
-            res.send(saved)
+            res.redirect('https://dashboard.playdragonfly.net/account')
         },
         function (err) {
             console.log('Something went wrong when retrieving the access token!', err.message);
