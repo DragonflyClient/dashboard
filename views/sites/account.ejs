@@ -207,6 +207,65 @@
                             </div>
                         </div>
                     </div>
+                    <% if(account.permissionLevel > 9) { %>
+                    <div class="row" style="width: 100%;">
+                        <div class="col-lg-6 mb-4">
+                            <!-- Redeem cosmetic card -->
+                            <div class="card shadow mb-4" id="redeem-cosmetic-wrapper">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-drgn-primary">
+                                        Connections
+                                    </h6>
+                                </div>
+                                <div class="card-body">
+                                    <% if(spotifyInfo.images) { %>
+                                    <div class="connection_item"
+                                        style="border-bottom: 2px solid gray; padding: 20px 0;">
+                                        <div class="connection_item-description"
+                                            style="display: flex; justify-content: space-between;">
+                                            <h3 class="connection_item-title">
+                                                <i class="fab fa-spotify" style="color: #1DB954;"></i><span
+                                                    style="color: #1DB954;"> Spotify</span>
+                                            </h3>
+                                            <% if(!spotifyInfo.display_name) { %>
+                                            <div class="minecraft-account-check">
+                                                <button id="connection_item-bind"
+                                                    class="connection_item-bind-btn">Link</button>
+                                            </div>
+                                            <% } else { %>
+                                            <div class="minecraft-account-unbind">
+                                                <button id="connection_item-unbind"
+                                                    class="connection_item-unbind-btn">Unlink</button>
+                                            </div>
+                                            <% } %>
+                                        </div>
+                                        <div class="connection_item-information">
+                                            <img class="connection_item-img" src=<%= spotifyInfo.images[0].url %>
+                                                alt=<%= spotifyInfo.display_name %>>
+                                            <span class="connection_item-name"><%= spotifyInfo.display_name %></span>
+                                        </div>
+                                    </div>
+                                    <% } else { %>
+                                    <div class="connection_item"
+                                        style="border-bottom: 2px solid gray; padding: 20px 0;">
+                                        <div class="connection_item-description"
+                                            style="display: flex; justify-content: space-between;">
+                                            <h3 class="connection_item-title">
+                                                <i class="fab fa-spotify" style="color: #1DB954;"></i><span
+                                                    style="color: #1DB954;"> Spotify</span>
+                                            </h3>
+                                            <div class="minecraft-account-check">
+                                                <a href="https://dashboard.playdragonfly.net/link/spotify"
+                                                    class="connection_item-bind-btn">Link</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <% } %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <% } %>
 
                     <!-- Content Row -->
                 </div>
