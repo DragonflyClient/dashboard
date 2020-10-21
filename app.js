@@ -46,12 +46,13 @@ app.use(cookieParser());
 
 // API ROUTES
 app.use(compression())
+app.use('/link', linkRouter)
+
 app.use('/', indexRouter);
+app.use('/partner', partnerRouter)
 app.use('/auth', authRouter);
 app.use('/minecraft', minecraftRouter)
 app.use('/statistics', statisticsRouter)
-app.use('/partner', partnerRouter)
-app.use('/link', linkRouter)
 
 async function getDragonflyAccount(token) {
     let account;
