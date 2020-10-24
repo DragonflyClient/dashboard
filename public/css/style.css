@@ -8,6 +8,14 @@
   --clr-plight: #ffc247;
 }
 
+.pointer-none {
+  pointer-events: none;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
 .note_coming-soon {
   margin-top: 20px;
   text-align: center;
