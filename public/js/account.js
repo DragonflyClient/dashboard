@@ -2,6 +2,8 @@ const urlParams = new URLSearchParams(window.location.search);
 
 window.addEventListener('load', () => {
     const screenSize = window.innerWidth < 1000 ? "mobile" : "desktop"
+    const scrollDelay = 0
+    if (screenSize === "mobile") scrollDelay = 550
     if (urlParams.get('red') === "redeem") {
         const targetElement = document.getElementById('redeem-cosmetic-wrapper')
         const posY = targetElement.getBoundingClientRect().top
@@ -10,16 +12,33 @@ window.addEventListener('load', () => {
         setTimeout(() => {
             window.scrollBy(0, posY)
             document.getElementsByTagName("html")[0].style.scrollBehavior = "auto"
-        }, 0);
-        if (screenSize == "mobile") {
-            setTimeout(() => {
-                targetElement.classList.add('animate-pop')
-            }, 550);
-        } else {
-            targetElement.classList.add('animate-pop')
-        }
+        }, scrollDelay);
     }
 })
+
+const accordionList = document.querySelectorAll('.accordion-item-header');
+
+accordionList.forEach((accordionHeader) => {
+    accordionHeader.addEventListener('click', (event) => {
+        toggleAccordion(accordionHeader);
+    });
+});
+
+function toggleAccordion(element) {
+    element.classList.toggle('accordion-active');
+    const accordionItemBody = element.nextElementSibling.nextElementSibling;
+    if (element.classList.contains('accordion-active')) {
+        accordionList.forEach((otherAccordion) => {
+            if (otherAccordion !== element) {
+                otherAccordion.classList.remove('accordion-active')
+                otherAccordion.nextElementSibling.nextElementSibling.style.maxHeight = 0;
+            }
+        })
+        accordionItemBody.style.maxHeight = accordionItemBody.scrollHeight + 'px';
+    } else {
+        accordionItemBody.style.maxHeight = '0';
+    }
+}
 
 function adjust(elements, offset, min, max) {
     // initialize parameters
