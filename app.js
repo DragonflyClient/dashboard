@@ -9,7 +9,7 @@ const mongoose = require('mongoose')
 const BASE_API_URL = 'http://localhost:1414'
 
 mongoose.connect(`mongodb://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@localhost:27017/dragonfly`,
-    { useNewUrlParser: true, useUnifiedTopology: true },
+    { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false },
     console.log('Connected to DB'))
 
 require('dotenv/config')
