@@ -61,7 +61,7 @@ router.get('/info/spotify', async (req, res) => {
     loggedInSpotifyApi.setRefreshToken(accountLink.refresh_token)
 
     if (accountLink.next_expiration < new Date().getTime()) {
-        loggedInSpotifyApi.refreshAccessToken().then(
+        await loggedInSpotifyApi.refreshAccessToken().then(
             async function (data) {
                 const expiresIn = data.body.expires_in
 
@@ -82,6 +82,7 @@ router.get('/info/spotify', async (req, res) => {
             res.send(data.body)
         }, function (err) {
             console.log(err)
+            return res.status(401).render('error', { message: "Internal server error. Please try again later or login", backUrl: null, error: "internal_error:spotify", final: false })
         })
     return result
 })
@@ -93,6 +94,14 @@ router.get('/spotify', async (req, res) => {
     if (accountLink) return res.send({ success: false, message: "Already linked" })
     var authorizeURL = spotifyApi.createAuthorizeURL(scopes, null, showDialog);
     res.redirect(authorizeURL);
+})
+
+router.get('/remove/spotify', async (req, res) => {
+    const token = req.cookies['dragonfly-token']
+    const account = req.account
+    const accountLink = await AccountLink.findOneAndDelete({ dragonflyUUID: account.uuid })
+    console.log(accountLink)
+    res.redirect('https://dashboard.playdragonfly.net/account')
 })
 
 router.get('/callback', async (req, res) => {
