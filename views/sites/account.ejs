@@ -217,32 +217,38 @@
                                         Connections
                                     </h6>
                                 </div>
-                                <div class="card-body">
+                                <div class="card-body" style="padding: 0 !important;">
                                     <% if(spotifyInfo.images) { %>
-                                    <div class="connection_item"
-                                        style="border-bottom: 2px solid gray; padding: 20px 0;">
-                                        <div class="connection_item-description"
-                                            style="display: flex; justify-content: space-between;">
-                                            <h3 class="connection_item-title">
-                                                <i class="fab fa-spotify" style="color: #1DB954;"></i><span
-                                                    style="color: #1DB954;"> Spotify</span>
-                                            </h3>
-                                            <% if(!spotifyInfo.display_name) { %>
-                                            <div class="minecraft-account-check">
-                                                <button id="connection_item-bind"
-                                                    class="connection_item-bind-btn">Link</button>
-                                            </div>
-                                            <% } else { %>
-                                            <div class="minecraft-account-unbind">
-                                                <button id="connection_item-unbind"
-                                                    class="connection_item-unbind-btn">Unlink</button>
-                                            </div>
-                                            <% } %>
+                                    <div class="accordion-item">
+                                        <div id="201" class="accordion-item-header">
+                                            <span><i class="fab fa-spotify" style="color: #1DB954;"></i></span><span
+                                                style="color: #1DB954;"> Spotify</span>
                                         </div>
-                                        <div class="connection_item-information">
-                                            <img class="connection_item-img" src=<%= spotifyInfo.images[0].url %>
-                                                alt=<%= spotifyInfo.display_name %>>
-                                            <span class="connection_item-name"><%= spotifyInfo.display_name %></span>
+                                        <div class="problem-desc accordion-item__description">
+                                            <p>You can link your Spotify account to your Dragonfly account to control
+                                                your Spotify while playing.</p>
+                                        </div>
+                                        <div class="accordion-item-body">
+                                            <div class="accordion-item-body-content">
+                                                <div class="problem-fix">
+                                                    <div class="connection_item-information">
+                                                        <div>
+                                                            <img class="connection_item-img"
+                                                                src=<%= spotifyInfo.images[0].url %>
+                                                                alt=<%= spotifyInfo.display_name %>>
+                                                            <span
+                                                                class="connection_item-name"><%= spotifyInfo.display_name %></span>
+                                                        </div>
+                                                        </h3>
+                                                        <div class="minecraft-account-check">
+                                                            <a href="https://dashboard.playdragonfly.net/link/spotify"
+                                                                class="connection_item-unbind-btn">Unlink</a>
+                                                        </div>
+                                                    </div>
+                                                    <p>The data that can be retrieved from the connection are stored
+                                                        securely and are not shared with third parties.</p>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <% } else { %>
@@ -261,6 +267,7 @@
                                         </div>
                                     </div>
                                     <% } %>
+
                                 </div>
                             </div>
                         </div>

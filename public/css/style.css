@@ -387,7 +387,6 @@ hr {
 }
 
 .minecraft-account-check {
-  align-self: baseline;
   cursor: pointer;
 }
 
@@ -436,8 +435,9 @@ hr {
 .connection_item-unbind-btn {
   align-self: center;
   color: #e74a3b !important;
-  padding: 7px 9px;
-  font-size: 1.15rem;
+  padding: 5px 12px;
+  font-weight: 600;
+  font-size: 1.05rem;
   border: 2px solid #e74a3b;
   border-radius: 3px;
 
@@ -445,6 +445,7 @@ hr {
 }
 
 .connection_item-unbind-btn:hover {
+  text-decoration: none;
   color: #ffffff !important;
   background-color: #e74a3b;
   border: 2px solid #e74a3b;
@@ -465,6 +466,95 @@ hr {
 
 .connection_item-name {
   font-size: 1.2rem;
+}
+
+.accordion-wrapper
+{
+  width: 95%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.accordion-item
+{
+  background: #fff;
+  color: #111;
+  margin: 0;
+  border-radius: 0;
+  box-shadow: none
+}
+
+.accordion-item-header
+{
+  padding: .5rem 3rem .5rem 1rem;
+  min-height: 3.2rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.accordion-item-header span
+{
+  margin-right: .7rem;
+  color: var(--clr-primary)
+}
+
+.accordion-no-body.accordion-item-header::before
+{
+  display: none;
+}
+.accordion-no-body.accordion-item-header {
+  cursor: auto;
+}
+
+.accordion-item-header::before
+{
+  content: '\002B';
+  font-size: 2rem;
+  position: absolute;
+  right: 1rem;
+  transition: transform .2s ease
+}
+
+.accordion-item-header.accordion-active::before
+{
+  transform: rotate(45deg)
+}
+
+.accordion-item-body
+{
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .15s ease-out
+}
+
+.accordion-item-body-content
+{
+  padding: 0 .8rem .8rem;
+  line-height: 1.5rem;
+}
+
+.accordion-item__description {
+  padding: 0 .8rem;
+}
+
+.connection_item-information {
+  margin-bottom: .5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 94%;
+    min-height: 50px;
 }
 
 /* PARTNER */
