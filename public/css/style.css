@@ -8,6 +8,10 @@
   --clr-plight: #ffc247;
 }
 
+.us-none {
+  user-select: none;
+}
+
 .pointer-none {
   pointer-events: none;
 }
