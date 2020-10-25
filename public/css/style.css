@@ -115,6 +115,23 @@
   border-left: 0.25rem solid var(--clr-bg) !important;
 }
 
+.bg-drgn-primary {
+    background-color: var(--clr-primary) !important;
+}
+
+b, strong {
+  font-weight: 800;
+}
+
+#notification-list {
+  max-height: 250px;
+  overflow: auto;
+}
+
+.notification-item {
+  color: #3a3b45 !important;
+}
+
 /* Login page */
 form.user .form-control-user,
 .btn-user {
