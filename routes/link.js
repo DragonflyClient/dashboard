@@ -63,9 +63,9 @@ router.get('/info/spotify', async (req, res) => {
     if (accountLink.next_expiration < new Date().getTime()) {
         await loggedInSpotifyApi.refreshAccessToken().then(
             async function (data) {
-                const expiresIn = data.body.expires_in
+                const expiresIn = data.body.expires_in * 1000
 
-                const nextExpiration = new Date().getTime() + expiresIn * 1000
+                const nextExpiration = new Date().getTime() + expiresIn
                 console.log('The access token has been refreshed!');
 
                 // Save the access token so that it's used in future calls
@@ -74,6 +74,7 @@ router.get('/info/spotify', async (req, res) => {
             },
             function (err) {
                 console.log('Could not refresh access token', err);
+                return res.status(401).render('error', { message: "Error while authenticating. Please try again later or login", backUrl: null, error: "auth_timeout", final: true })
             }
         );
     }
@@ -88,7 +89,6 @@ router.get('/info/spotify', async (req, res) => {
 })
 
 router.get('/spotify', async (req, res) => {
-    const token = req.cookies["dragonfly-token"]
     const account = req.account
     const accountLink = await AccountLink.findOne({ dragonflyUUID: account.uuid })
     if (accountLink) return res.send({ success: false, message: "Already linked" })
@@ -97,7 +97,6 @@ router.get('/spotify', async (req, res) => {
 })
 
 router.get('/remove/spotify', async (req, res) => {
-    const token = req.cookies['dragonfly-token']
     const account = req.account
     const accountLink = await AccountLink.findOneAndDelete({ dragonflyUUID: account.uuid })
     console.log(accountLink)
@@ -105,7 +104,6 @@ router.get('/remove/spotify', async (req, res) => {
 })
 
 router.get('/callback', async (req, res) => {
-    const token = req.cookies["dragonfly-token"]
     const account = req.account
     const authorizationCode = req.query.code
     spotifyApi.authorizationCodeGrant(authorizationCode).then(
@@ -113,8 +111,8 @@ router.get('/callback', async (req, res) => {
             console.log(data)
             const accessToken = data.body.access_token
             const refreshToken = data.body.refresh_token
-            const expiresIn = data.body.expires_in
-            const nextExpiration = new Date().getTime() + expiresIn * 1000
+            const expiresIn = data.body.expires_in * 1000
+            const nextExpiration = new Date().getTime() + expiresIn
 
             const newAccountLink = new AccountLink({
                 dragonflyUUID: account.uuid,
@@ -123,7 +121,7 @@ router.get('/callback', async (req, res) => {
                 expires_in: expiresIn,
                 next_expiration: nextExpiration
             })
-            const saved = await newAccountLink.save()
+            await newAccountLink.save()
             res.redirect('https://dashboard.playdragonfly.net/account')
         },
         function (err) {
