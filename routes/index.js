@@ -44,9 +44,8 @@ router.get('/', async (req, res) => {
       }
     }
   }
-  console.log('backend done')
+
   res.render('sites/index', { account: account, totalPlaytime: totalPlaytime, monthlyPlaytime: monthlyPlaytime })
-  res.end()
 })
 
 router.get('/cosmetics', async (req, res) => {
