@@ -59,7 +59,7 @@
                         <% } else { %>
                         <% cosmeticModels.map((model, index) => { %>
                         <% const item = cosmetics[index] %>
-                        <div class="col-xl-4">
+                        <div class="col-xl-4" data-cosmetic-qualifier=<%= item.cosmeticQualifier %>>
                             <div class="card shadow mb-4">
                                 <!-- Card Header - Dropdown -->
                                 <div
@@ -67,6 +67,9 @@
                                     <h6 class="m-0 font-weight-bold text-primary">
                                         <%= model.name %>
                                     </h6>
+                                    <div class="cosmetic-transfer-btn cursor-pointer">
+                                        <i class="fas fa-share-square pointer-none"></i>
+                                    </div>
                                 </div>
                                 <!-- Card Body -->
                                 <div class="card-body card-body-cosmetic">
