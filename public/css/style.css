@@ -258,6 +258,7 @@ hr {
 }
 
 .minecraft-account-name {
+  word-break: break-all;
   font-size: 1.4rem;
   margin: 0;
 }
@@ -379,7 +380,7 @@ hr {
   }
 }
 
-@media(max-width: 500px) {
+@media (max-width: 500px) {
   .minecraft-skull {
     width: 30px;
     height: 30px;
@@ -387,7 +388,8 @@ hr {
   .minecraft-account-uuid {
     display: none;
   }
-  .minecraft-account-item, .minecraft-account {
+  .minecraft-account-item,
+  .minecraft-account {
     align-items: flex-start;
   }
   .minecraft-account-name {
