@@ -18,7 +18,7 @@ const AccountLinkSchema = new mongoose.Schema({
         required: true
     },
     next_expiration: {
-        type: Number,
+        type: mongoose.SchemaTypes.Decimal128,
         required: true
     }
 })
