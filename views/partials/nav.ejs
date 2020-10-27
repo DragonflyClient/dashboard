@@ -18,9 +18,12 @@
             <!-- Dropdown - Alerts -->
             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                 aria-labelledby="alertsDropdown">
-                <h6 class="dropdown-header">
-                    Alerts Center
-                </h6>
+                <div class="dropdown-header-wrapper">
+                    <h6 class="dropdown-header">
+                        Alerts Center
+                    </h6>
+                    <i class="fas fa-inbox" id="read-all-icon"></i>
+                </div>
                 <div id="notification-list">
                     <p
                         class="notification-item dropdown-item d-flex align-items-center cursor-pointer text-gray-500 mb-0">
@@ -48,6 +51,7 @@
         </li>
     </ul>
 </nav>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <!-- Moment -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"
     integrity="sha512-rmZcZsyhe0/MAjquhTgiUcb4d9knaFc7b5xAfju483gbEXTkeJRUMIPk6s3ySZMYUHEcjKbjLjyddGWMrNEvZg=="

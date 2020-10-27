@@ -123,6 +123,18 @@ b, strong {
   font-weight: 800;
 }
 
+.dropdown-header-wrapper {
+  background-color: #4e73df;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 1.5rem;
+}
+
+#read-all-icon {
+  color: white
+}
+
 #notification-list {
   max-height: 250px;
   overflow: auto;
