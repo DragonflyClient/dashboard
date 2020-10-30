@@ -1,4 +1,4 @@
-const Toast = Swal.mixin({
+const navToast = Swal.mixin({
     toast: true,
     position: 'top-end',
     showConfirmButton: false,
@@ -64,7 +64,7 @@ function listNotifications() {
         Object.keys(types).map(function (key, index) {
             if (notification.icon == key) type = types[key];
         });
-        const sendTime = moment(notification.sendTime).fromNow()
+        const sendTime = new Date().getTime() < notification.sendTime ? moment(new Date().getTime()).fromNow() : moment(notification.sendTime).fromNow()
         var nth = 0;
         let notificationMessage = notification.message
         if (notificationMessage.indexOf('**') > -1)
@@ -73,7 +73,7 @@ function listNotifications() {
                 return nth % 2 === 0 ? "</b>" : "<b>";
             });
         notificationList.innerHTML += `
-    <a data-nid="${notification._id}" data-nread="${notification.read}" data-notification-read="${notification.read}" onclick='notificationAction("${notification.action && notification.action.type === "open_url" ? notification.action.target : ''}", "${notification._id}", ${notification.read})' class="${!notification.read ? type.border : ''} notification-item dropdown-item d-flex align-items-center cursor-pointer">
+    <div data-nid="${notification._id}" data-nread="${notification.read}" onclick='notificationAction("${notification.action && notification.action.type === "open_url" ? notification.action.target : ''}", "${notification._id}", ${notification.read})' class="${!notification.read ? type.border : ''} notification-item dropdown-item d-flex align-items-center cursor-pointer">
         <div class="mr-3">
             <div class="icon-circle ${type.bgColor}">
                 <i class="fas ${type.icon} text-white"></i>
@@ -83,7 +83,7 @@ function listNotifications() {
             <div class="small text-gray-500">${sendTime}${notification.category ? " · " + notification.category : ""}</div>
             <span class="font-weight-bold">${notificationMessage}</span>
         </div>
-    </a>`
+    </div>`
     })
     if (unread <= 9 && unread > 0) {
         notificationCounter.innerText = unread
@@ -147,7 +147,7 @@ async function readAll() {
             .then(res => res.json())
             .then(async data => {
                 if (data.success) {
-                    Toast.fire({
+                    navToast.fire({
                         icon: 'success',
                         title: 'Set all notification to read'
                     })
