@@ -1,96 +1,104 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link rel="icon" href="https://cdn.icnet.dev/web/drgn/assets/img/svg/Dragon.svg" />
 
-<head>
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <link rel="icon" href="https://cdn.icnet.dev/web/drgn/assets/img/svg/Dragon.svg" />
+    <title>Dragonfly - Dashboard</title>
 
-  <title>Dragonfly - Dashboard</title>
+    <!-- Custom fonts for this template-->
+    <link
+      href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+      rel="stylesheet"
+    />
+    <meta
+      name="description"
+      content="On the dashboard of the Dragonfly client, you can manage your cosmetics, link Minecraft accounts and view statistics."
+    />
 
-  <!-- Custom fonts for this template-->
-  <link
-    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-    rel="stylesheet" />
-  <meta name="description"
-    content="On the dashboard of the Dragonfly client, you can manage your cosmetics, link Minecraft accounts and view statistics." />
+    <!-- Custom styles for this template-->
+    <link href="https://dashboard.playdragonfly.net/css/sb-admin-2.min.css" rel="stylesheet" />
+    <link
+      rel="preload"
+      href="https://dashboard.playdragonfly.net/vendor/fontawesome-free/css/all.css"
+      type="text/css"
+      as="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://dashboard.playdragonfly.net/vendor/fontawesome-free/css/all.css"
+      type="text/css"
+      as="stylesheet"
+    />
+    <link rel="stylesheet" href="https://dashboard.playdragonfly.net/css/style.css" />
+  </head>
 
-  <!-- Custom styles for this template-->
-  <link href="https://dashboard.playdragonfly.net/css/sb-admin-2.min.css" rel="stylesheet" />
-  <link rel="preload" href="https://dashboard.playdragonfly.net/vendor/fontawesome-free/css/all.css" type="text/css"
-    as="stylesheet" />
-  <link rel="stylesheet" href="https://dashboard.playdragonfly.net/vendor/fontawesome-free/css/all.css" type="text/css"
-    as="stylesheet" />
-  <link rel="stylesheet" href="https://dashboard.playdragonfly.net/css/style.css" />
-</head>
+  <body>
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+      <!-- Sidebar -->
+      <%- include('../partials/sidebar', { account: account }) %>
+      <!-- End of Sidebar -->
 
-<body>
-  <!-- Page Wrapper -->
-  <div id="wrapper">
-    <!-- Sidebar -->
-    <%- include('../partials/sidebar', { account: account }) %>
-    <!-- End of Sidebar -->
+      <!-- Content Wrapper -->
+      <div id="content-wrapper" class="d-flex flex-column">
+        <!-- Main Content -->
+        <div id="content">
+          <!-- Topbar -->
+          <%- include('../partials/nav', { account: account }) %>
 
-    <!-- Content Wrapper -->
-    <div id="content-wrapper" class="d-flex flex-column">
-      <!-- Main Content -->
-      <div id="content">
-        <!-- Topbar -->
-        <%- include('../partials/nav', { account: account }) %>
-
-        <!-- Begin Page Content -->
-        <div class="container-fluid">
-          <!-- Content Row -->
-          <div class="row" style="width: 100%;">
-            <!-- Playtime (Total) Card -->
-            <div class="col-xl-6 col-md-6 mb-4">
-              <div class="card border-left-primary shadow h-100 py-2">
-                <div class="card-body">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                        Playtime (total)
+          <!-- Begin Page Content -->
+          <div class="container-fluid">
+            <!-- Content Row -->
+            <div class="row" style="width: 100%">
+              <!-- Playtime (Total) Card -->
+              <div class="col-xl-6 col-md-6 mb-4">
+                <div class="card border-left-primary shadow h-100 py-2">
+                  <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                      <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Playtime (total)</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                          <% const hours = Math.trunc(totalPlaytime / 60) %> <% const minutes = totalPlaytime % 60 %>
+                          <%= hours > 0 && minutes > 0 ? `${hours}h ${minutes}m` : hours > 0 ? `${hours}h` :
+                          `${minutes}m` %>
+                        </div>
                       </div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">
-                        <% const hours = Math.trunc(totalPlaytime / 60) %>
-                        <% const minutes = totalPlaytime % 60 %>
-                        <%= hours > 0 && minutes > 0 ? `${hours}h ${minutes}m` : hours > 0 ? `${hours}h` : `${minutes}m` %>
+                      <div class="col-auto">
+                        <i class="fas fa-clock fa-2x text-gray-300"></i>
                       </div>
-                    </div>
-                    <div class="col-auto">
-                      <i class="fas fa-clock fa-2x text-gray-300"></i>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            <!-- Playtime (Monthly) - Card -->
-            <div class="col-xl-6 col-md-6 mb-4">
-              <div class="card border-left-success shadow h-100 py-2">
-                <div class="card-body">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                        Playtime (this month)
+              <!-- Playtime (Monthly) - Card -->
+              <div class="col-xl-6 col-md-6 mb-4">
+                <div class="card border-left-success shadow h-100 py-2">
+                  <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                      <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                          Playtime (this month)
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                          <% const monthlyHours = Math.trunc(monthlyPlaytime / 60) %> <% const monthlyMinutes =
+                          monthlyPlaytime % 60 %> <%= monthlyHours > 0 && monthlyMinutes > 0 ? `${monthlyHours}h
+                          ${monthlyMinutes}m` : monthlyHours > 0 ? `${monthlyHours}h` : `${monthlyMinutes}m` %>
+                        </div>
                       </div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">
-                        <% const monthlyHours = Math.trunc(monthlyPlaytime / 60) %>
-                        <% const monthlyMinutes = monthlyPlaytime % 60 %>
-                        <%= monthlyHours > 0 && monthlyMinutes > 0 ? `${monthlyHours}h ${monthlyMinutes}m` : monthlyHours > 0 ? `${monthlyHours}h` : `${monthlyMinutes}m` %>
+                      <div class="col-auto">
+                        <i class="fas fa-calendar fa-2x text-gray-300"></i>
                       </div>
-                    </div>
-                    <div class="col-auto">
-                      <i class="fas fa-calendar fa-2x text-gray-300"></i>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            <!-- Account creation date - Card -->
-            <!-- <div class="col-xl-6 col-md-6 mb-4">
+              <!-- Account creation date - Card -->
+              <!-- <div class="col-xl-6 col-md-6 mb-4">
               <div class="card border-left-drgn-primary shadow h-100 py-2">
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
@@ -110,8 +118,8 @@
               </div>
             </div> -->
 
-            <!-- Favorite Server - Card -->
-            <!-- <div class="col-xl-4 col-md-4 mb-4">
+              <!-- Favorite Server - Card -->
+              <!-- <div class="col-xl-4 col-md-4 mb-4">
               <div class="card border-left-info shadow h-100 py-2">
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
@@ -134,56 +142,67 @@
                 </div>
               </div>
             </div> -->
-          </div>
+            </div>
 
-          <!-- Content Row -->
+            <!-- Content Row -->
 
-          <div class="row">
-            <!-- Area Chart -->
-            <div class="col-xl-12 col-lg-12">
-              <div class="card shadow mb-4">
-                <!-- Card Header - Dropdown -->
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">
-                    Playtime Overview
-                  </h6>
-                  <div class="dropdown no-arrow">
-                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
-                      aria-haspopup="true" aria-expanded="false">
-                      <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                      aria-labelledby="dropdownMenuLink">
-                      <div class="dropdown-header">Dropdown Header:</div>
-                      <a class="dropdown-item" onclick="addData(myLineChart, 12, 6)">Last 12
-                        moths</a>
-                      <a class="dropdown-item" onclick="addData(myLineChart, 6, 12)">Last 6
-                        months</a>
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item">Close</a>
+            <div class="row">
+              <!-- Area Chart -->
+              <div class="col-xl-12 col-lg-12">
+                <div class="card shadow mb-4">
+                  <!-- Card Header - Dropdown -->
+                  <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Playtime Overview</h6>
+                    <div class="dropdown no-arrow">
+                      <a
+                        class="dropdown-toggle"
+                        href="#"
+                        role="button"
+                        id="dropdownMenuLink"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                      >
+                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                      </a>
+                      <div
+                        class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                        aria-labelledby="dropdownMenuLink"
+                      >
+                        <div class="dropdown-header">Duration:</div>
+                        <a class="dropdown-item" onclick="addData(myLineChart, 12, 6)">Last 12 moths</a>
+                        <a class="dropdown-item" onclick="addData(myLineChart, 6, 12)">Last 6 months</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item">Close</a>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <!-- Card Body -->
-                <div class="card-body">
-                  <div class="chart-area">
-                    <div class="chartjs-size-monitor">
-                      <div class="chartjs-size-monitor-expand">
-                        <div class=""></div>
+                  <!-- Card Body -->
+                  <div class="card-body">
+                    <div class="chart-area">
+                      <div class="chartjs-size-monitor">
+                        <div class="chartjs-size-monitor-expand">
+                          <div class=""></div>
+                        </div>
+                        <div class="chartjs-size-monitor-shrink">
+                          <div class=""></div>
+                        </div>
                       </div>
-                      <div class="chartjs-size-monitor-shrink">
-                        <div class=""></div>
-                      </div>
+                      <canvas
+                        id="myAreaChart"
+                        style="display: block; width: 1021px; height: 320px"
+                        width="1021"
+                        height="320"
+                        class="chartjs-render-monitor"
+                      >
+                      </canvas>
                     </div>
-                    <canvas id="myAreaChart" style="display: block; width: 1021px; height: 320px;" width="1021"
-                      height="320" class="chartjs-render-monitor"> </canvas>
                   </div>
                 </div>
               </div>
-            </div>
 
-            <!-- Pie Chart -->
-            <!-- <div class="col-xl-4 col-lg-5">
+              <!-- Pie Chart -->
+              <!-- <div class="col-xl-4 col-lg-5">
               <div class="card shadow mb-4">
                 <-- Card Header - Dropdown ->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -224,59 +243,62 @@
                 </div>
               </div>
             </div> -->
+            </div>
           </div>
+          <!-- /.container-fluid -->
         </div>
-        <!-- /.container-fluid -->
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+        <footer class="sticky-footer bg-white">
+          <div class="container my-auto">
+            <div class="copyright text-center my-auto">
+              <span>Copyright © Inception Cloud 2020</span>
+            </div>
+          </div>
+        </footer>
+        <!-- End of Footer -->
       </div>
-      <!-- End of Main Content -->
-
-      <!-- Footer -->
-      <footer class="sticky-footer bg-white">
-        <div class="container my-auto">
-          <div class="copyright text-center my-auto">
-            <span>Copyright © Inception Cloud 2020</span>
-          </div>
-        </div>
-      </footer>
-      <!-- End of Footer -->
+      <!-- End of Content Wrapper -->
     </div>
-    <!-- End of Content Wrapper -->
-  </div>
-  <!-- End of Page Wrapper -->
+    <!-- End of Page Wrapper -->
 
-  <!-- Scroll to Top Button-->
-  <a class="scroll-to-top rounded" href="#page-top" style="display: none;">
-    <i class="fas fa-angle-up"></i>
-  </a>
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top" style="display: none">
+      <i class="fas fa-angle-up"></i>
+    </a>
 
-  <!---->
-  <!-- Bootstrap core JavaScript-->
-  <script src="https://dashboard.playdragonfly.net/vendor/jquery/jquery.js"></script>
-  <script src="https://dashboard.playdragonfly.net/vendor/bootstrap/js/bootstrap.bundle.js"></script>
+    <!---->
+    <!-- Bootstrap core JavaScript-->
+    <script src="https://dashboard.playdragonfly.net/vendor/jquery/jquery.js"></script>
+    <script src="https://dashboard.playdragonfly.net/vendor/bootstrap/js/bootstrap.bundle.js"></script>
 
-  <!-- Core plugin JavaScript-->
-  <script src="https://dashboard.playdragonfly.net/vendor/jquery-easing/jquery.easing.js"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="https://dashboard.playdragonfly.net/vendor/jquery-easing/jquery.easing.js"></script>
 
-  <!-- Custom scripts for all pages-->
-  <script src="https://dashboard.playdragonfly.net/js/sb-admin-2.js"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="https://dashboard.playdragonfly.net/js/sb-admin-2.js"></script>
 
-  <!-- Sweet alert -->
-  <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script> -->
+    <!-- Sweet alert -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script> -->
 
-  <!-- Page level plugins -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"
-    integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw=="
-    crossorigin="anonymous"></script>
-  <!-- Moment -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"
-    integrity="sha512-rmZcZsyhe0/MAjquhTgiUcb4d9knaFc7b5xAfju483gbEXTkeJRUMIPk6s3ySZMYUHEcjKbjLjyddGWMrNEvZg=="
-    crossorigin="anonymous"></script>
+    <!-- Page level plugins -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"
+      integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw=="
+      crossorigin="anonymous"
+    ></script>
+    <!-- Moment -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"
+      integrity="sha512-rmZcZsyhe0/MAjquhTgiUcb4d9knaFc7b5xAfju483gbEXTkeJRUMIPk6s3ySZMYUHEcjKbjLjyddGWMrNEvZg=="
+      crossorigin="anonymous"
+    ></script>
 
-  <!-- Page level custom scripts -->
-  <script src="https://dashboard.playdragonfly.net/js/charts/chart-area-demo.js"></script>
-  <!-- <script src="https://dashboard.playdragonfly.net/js/charts/chart-pie-demo.js"></script> -->
-  <script src="https://dashboard.playdragonfly.net/js/dashboard.js" defer></script>
-  <script src="https://dashboard.playdragonfly.net/js/main.js"></script>
-</body>
-
+    <!-- Page level custom scripts -->
+    <script src="https://dashboard.playdragonfly.net/js/charts/chart-area-demo.js"></script>
+    <!-- <script src="https://dashboard.playdragonfly.net/js/charts/chart-pie-demo.js"></script> -->
+    <script src="https://dashboard.playdragonfly.net/js/dashboard.js" defer></script>
+    <script src="https://dashboard.playdragonfly.net/js/main.js"></script>
+  </body>
 </html>
