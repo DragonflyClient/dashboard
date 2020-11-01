@@ -8,6 +8,39 @@
   --clr-plight: #ffc247;
 }
 
+/* width */
+#notification-list::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+#notification-list::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+
+/* Handle */
+#notification-list::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+#notification-list::-webkit-scrollbar-thumb:hover {
+  background: #777;
+}
+
+.topbar .dropdown-list .dropdown-item {
+  border-right: none !important;
+}
+
+/* sb adjustments */
+@media (min-width: 576px) {
+  #dropdown-notifications-list {
+    width: 400px !important;
+    width: auto;
+    right: 0;
+  }
+}
+
 .us-none {
   user-select: none;
 }
@@ -26,7 +59,7 @@
 }
 
 .animate-pop {
-  animation: pop .7s;
+  animation: pop 0.7s;
 }
 
 @keyframes pop {
@@ -57,20 +90,21 @@
   color: var(--clr-plight);
 }
 
-.nav-link, .nav-item {
+.nav-link,
+.nav-item {
   cursor: pointer;
 }
 
 .cosmetics-empty__wrapper {
-  text-align: center; 
-  width: 100%; 
+  text-align: center;
+  width: 100%;
   margin-top: 50px;
 }
 .cosmetics-empty__desc {
   margin-top: 25px;
 }
 
-@media(max-width: 780px) {
+@media (max-width: 780px) {
   .navbar-nav {
     width: 6.5rem !important;
   }
@@ -116,10 +150,15 @@
 }
 
 .bg-drgn-primary {
-    background-color: var(--clr-primary) !important;
+  background-color: var(--clr-primary) !important;
 }
 
-b, strong {
+.bg-drgn-plight {
+  background-color: var(--clr-plight);
+}
+
+b,
+strong {
   font-weight: 800;
 }
 
@@ -132,7 +171,7 @@ b, strong {
 }
 
 #read-all-icon {
-  color: white
+  color: white;
 }
 
 #notification-list {
@@ -510,25 +549,22 @@ hr {
   font-size: 1.2rem;
 }
 
-.accordion-wrapper
-{
+.accordion-wrapper {
   width: 95%;
   max-width: 1000px;
   margin: 0 auto;
 }
 
-.accordion-item
-{
+.accordion-item {
   background: #fff;
   color: #111;
   margin: 0;
   border-radius: 0;
-  box-shadow: none
+  box-shadow: none;
 }
 
-.accordion-item-header
-{
-  padding: .5rem 3rem .5rem 1rem;
+.accordion-item-header {
+  padding: 0.5rem 3rem 0.5rem 1rem;
   min-height: 3.2rem;
   line-height: 1.25rem;
   font-weight: 500;
@@ -552,66 +588,59 @@ hr {
   padding-bottom: 1.2rem;
 }
 
-.accordion-no-body.accordion-item-header::before
-{
-    display: none;
-}
-.accordion-no-body.accordion-item-header {
-    cursor: auto;
-}
-
-.accordion-item-header span
-{
-  margin-right: .7rem;
-  color: var(--clr-primary)
-}
-
-.accordion-no-body.accordion-item-header::before
-{
+.accordion-no-body.accordion-item-header::before {
   display: none;
 }
 .accordion-no-body.accordion-item-header {
   cursor: auto;
 }
 
-.accordion-item-header::before
-{
+.accordion-item-header span {
+  margin-right: 0.7rem;
+  color: var(--clr-primary);
+}
+
+.accordion-no-body.accordion-item-header::before {
+  display: none;
+}
+.accordion-no-body.accordion-item-header {
+  cursor: auto;
+}
+
+.accordion-item-header::before {
   content: '\002B';
   font-size: 2rem;
   position: absolute;
   right: 1rem;
-  transition: transform .2s ease
+  transition: transform 0.2s ease;
 }
 
-.accordion-item-header.accordion-active::before
-{
-  transform: rotate(45deg)
+.accordion-item-header.accordion-active::before {
+  transform: rotate(45deg);
 }
 
-.accordion-item-body
-{
+.accordion-item-body {
   max-height: 0;
   overflow: hidden;
-  transition: max-height .15s ease-out
+  transition: max-height 0.15s ease-out;
 }
 
-.accordion-item-body-content
-{
-  padding: 0 .8rem .8rem;
+.accordion-item-body-content {
+  padding: 0 0.8rem 0.8rem;
   line-height: 1.5rem;
 }
 
 .accordion-item__description {
-  padding: 0 .8rem;
+  padding: 0 0.8rem;
 }
 
 .connection_item-information {
-  margin-bottom: .5rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 94%;
-    min-height: 50px;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 94%;
+  min-height: 50px;
 }
 
 .connection_item-information__inner {
@@ -659,7 +688,7 @@ hr {
   }
 }
 
-@media(max-width: 500px) {
+@media (max-width: 500px) {
   .minecraft-skull {
     width: 30px;
     height: 30px;
@@ -667,7 +696,8 @@ hr {
   .minecraft-account-uuid {
     display: none;
   }
-  .minecraft-account-item, .minecraft-account {
+  .minecraft-account-item,
+  .minecraft-account {
     align-items: flex-start;
   }
   .minecraft-account-name {
