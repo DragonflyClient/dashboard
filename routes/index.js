@@ -2,30 +2,28 @@ var express = require('express');
 var router = express.Router();
 const axios = require('axios').default;
 const mongoose = require('mongoose')
-const moment = require('moment')
+const moment = require('moment');
 
-const secureAuth = async function (req, res, next) {
-  const dragonflyToken = req.cookies["dragonfly-token"]
-  if (!dragonflyToken) return res.redirect(`https://playdragonfly.net/login?ref=https://dashboard.playdragonfly.net${req.path}`)
+const BASE_API_URL = 'http://localhost:1414'
+
+const secureAuth = async (req, res, next) => {
+  console.log('index route')
+  const token = req.cookies["dragonfly-token"]
+  console.log(token, "TOKEn")
+  if (!token) return res.redirect('https://playdragonfly.net/login?ref=https://dashboard.playdragonfly.net')
+  const account = await getDragonflyAccount(token)
+  if (account == null) {
+    return res.status(401).render('error', { message: "Error while authenticating. Please try again later or login", backUrl: null, error: "auth_timeout", final: true })
+  }
+  req.account = account
   next()
 }
 
 router.use(secureAuth)
 
-router.use(async function (req, res, next) {
-  const token = req.cookies["dragonfly-token"]
-  const account = await getDragonflyAccount(token)
-  console.log(account)
-  if (account == null || account.permissionLevel < 8) {
-    res.status(401).send('No permissions :(')
-  } else {
-    next()
-  } // jetzertlaa
-});
-
 router.get('/', async (req, res) => {
   const token = req.cookies["dragonfly-token"]
-  const account = await getDragonflyAccount(token)
+  const account = req.account
   const dragonflyUUID = account.uuid
 
   const minecraftAccounts = await getLinkedMinecraftAccounts(account.linkedMinecraftAccounts)
@@ -46,31 +44,35 @@ router.get('/', async (req, res) => {
       }
     }
   }
-  res.render('sites/index', { account: account, linkedMinecraftAccounts: minecraftAccounts, path: req.path, totalPlaytime: totalPlaytime, monthlyPlaytime: monthlyPlaytime })
+
+  res.render('sites/index', { account: account, totalPlaytime: totalPlaytime, monthlyPlaytime: monthlyPlaytime })
 })
 
 router.get('/cosmetics', async (req, res) => {
   const token = req.cookies["dragonfly-token"]
-  const account = await getDragonflyAccount(token)
+  const account = req.account
   const dragonflyUUID = account.uuid
   const dragonflyCosmetics = await loadCosmetics(dragonflyUUID)
   console.log(dragonflyCosmetics)
 
   async function loadCosmetics(uuid) {
-    const result = await axios.get(`https://api.playdragonfly.net/v1/cosmetics/find?dragonfly=${uuid}`, {}, {
+    const result = await axios.get(`${BASE_API_URL}/v1/cosmetics/find?dragonfly=${uuid}`, {}, {
       headers: {
         'Authorization': `Bearer ${token}`
       }
     })
     return result.data.cosmetics
   }
+  console.log(loadAvailableCosmetics, "LOAD")
 
   const availableCosmetics = await loadAvailableCosmetics()
 
   async function loadAvailableCosmetics() {
-    const result = await axios.get(`https://api.playdragonfly.net/v1/cosmetics/available`)
+    const result = await axios.get(`${BASE_API_URL}/v1/cosmetics/available`)
     return result.data.availableCosmetics
   }
+
+  console.log(loadAvailableCosmetics, "AVAILABLE")
 
   const cosmeticModels = []
   for (cosmetic of dragonflyCosmetics) {
@@ -83,13 +85,59 @@ router.get('/cosmetics', async (req, res) => {
   res.render('sites/cosmetics', { account: account, path: req.path, cosmeticModels: cosmeticModels, cosmetics: dragonflyCosmetics, linkedMinecraftAccounts: minecraftAccounts })
 })
 
+router.get('/account', async (req, res) => {
+  const token = req.cookies["dragonfly-token"]
+  const account = req.account
+  account.creationDate = moment(account.creationDate).format('LL');
+  const dragonflyUUID = account.uuid
+
+  const spotifyInfo = await axios.get('https://dashboard.playdragonfly.net/link/info/spotify', {
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  }, {})
+  console.log(spotifyInfo.data, "S")
+
+  const ranks = {
+    0: "Player",
+    6: "Contributor",
+    7: "Partner",
+    8: "Moderator",
+    9: "Developer",
+    10: "Operator/Manager"
+  };
+  const permissionLevel = account.permissionLevel;
+
+  Object.keys(ranks).map(function (key, index) {
+    if (key == permissionLevel) {
+      account.rank = ranks[key]
+    }
+  });
+
+  const minecraftAccounts = await getLinkedMinecraftAccounts(account.linkedMinecraftAccounts)
+
+  res.render('sites/account', { account: account, linkedMinecraftAccounts: minecraftAccounts, spotifyInfo: spotifyInfo.data })
+})
+
 async function getDragonflyAccount(token) {
-  const result = await axios.post('https://api.playdragonfly.net/v1/authentication/token', {}, {
+  let account;
+  await axios.post(`${BASE_API_URL}/v1/authentication/token`, {}, {
+    timeout: 6000,
     headers: {
       "Authorization": `Bearer ${token}`
     }
   })
-  return result.data
+    .then(result => {
+      account = result.data
+    })
+    .catch(err => {
+      console.log(err)
+      if (err) {
+        console.log(err)
+      }
+    })
+
+  return account
 }
 
 async function getMinecraftName(uuid) {
@@ -100,7 +148,6 @@ async function getMinecraftName(uuid) {
 async function getLinkedMinecraftAccounts(linkedMinecraftAccounts) {
   const mcAccounts = []
   for (let i = 0; i < linkedMinecraftAccounts.length; i++) {
-    console.log(linkedMinecraftAccounts[i])
     const accountName = await getMinecraftName(linkedMinecraftAccounts[i])
     const mcAcc = {
       minecraftName: accountName,

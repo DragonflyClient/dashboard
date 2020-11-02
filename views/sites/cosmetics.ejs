@@ -43,9 +43,23 @@
                         <div class="spinner"></div>
                     </div> -->
                     <div style="width: 100%;" id="cosmetics-wrapper" class="row">
+                        <% if(cosmeticModels.length < 1) { %>
+                        <div class="cosmetics-empty__wrapper">
+                            <img class="cosmetics-empty__img" width="450" height="auto"
+                                src="https://dashboard.playdragonfly.net/img/undraw_empty_xct9.svg" alt="">
+                            <div class="cosmetics-empty__desc">
+                                <h1 class="cosmetics-empty__heading">Nothing here...</h1>
+                                <p>It looks like you don't own any cosmetic items!</p>
+                                <p>If you just received an item, click <a class="drgn-link"
+                                        href="https://dashboard.playdragonfly.net/cosmetics">here</a> to synchronize
+                                    your
+                                    cosmetics with our database.</p>
+                            </div>
+                        </div>
+                        <% } else { %>
                         <% cosmeticModels.map((model, index) => { %>
                         <% const item = cosmetics[index] %>
-                        <div class="col-xl-4">
+                        <div class="col-xl-4" data-cosmetic-qualifier=<%= item.cosmeticQualifier %>>
                             <div class="card shadow mb-4">
                                 <!-- Card Header - Dropdown -->
                                 <div
@@ -53,11 +67,15 @@
                                     <h6 class="m-0 font-weight-bold text-primary">
                                         <%= model.name %>
                                     </h6>
+                                    <div class="cosmetic-transfer-btn cursor-pointer">
+                                        <i class="fas fa-share-square pointer-none"></i>
+                                    </div>
                                 </div>
                                 <!-- Card Body -->
                                 <div class="card-body card-body-cosmetic">
                                     <div class="cosmetic-image">
-                                        <img src="<%= model.image %>" alt="Cosmetic">
+                                        <img src=<%= `${model.image}` || "https://dashboard.playdragonfly.net/img/undraw_void_3ggu.svg" %>
+                                            alt="Cosmetic">
                                     </div>
                                 </div>
                                 <div class="cosmetic-account-section">
@@ -79,6 +97,7 @@
                             </div>
                         </div>
                         <% }) %>
+                        <% } %>
                     </div>
                 </div>
             </div>

@@ -8,8 +8,106 @@
   --clr-plight: #ffc247;
 }
 
+/* width */
+#notification-list::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+#notification-list::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+
+/* Handle */
+#notification-list::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+#notification-list::-webkit-scrollbar-thumb:hover {
+  background: #777;
+}
+
+.topbar .dropdown-list .dropdown-item {
+  border-right: none !important;
+}
+
+/* sb adjustments */
+@media (min-width: 576px) {
+  #dropdown-notifications-list {
+    width: 400px !important;
+    width: auto;
+    right: 0;
+  }
+}
+
+.us-none {
+  user-select: none;
+}
+
+.pointer-none {
+  pointer-events: none;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.note_coming-soon {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.animate-pop {
+  animation: pop 0.7s;
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
 .dropdown-item {
   cursor: pointer;
+}
+
+.navbar-nav {
+  width: 15rem !important;
+}
+
+.drgn-link {
+  color: var(--clr-primary);
+}
+
+.drgn-link:hover {
+  color: var(--clr-plight);
+}
+
+.nav-link,
+.nav-item {
+  cursor: pointer;
+}
+
+.cosmetics-empty__wrapper {
+  text-align: center;
+  width: 100%;
+  margin-top: 50px;
+}
+.cosmetics-empty__desc {
+  margin-top: 25px;
+}
+
+@media (max-width: 780px) {
+  .navbar-nav {
+    width: 6.5rem !important;
+  }
 }
 
 /* Global vars */
@@ -49,6 +147,40 @@
 
 .border-left-drgn-bg {
   border-left: 0.25rem solid var(--clr-bg) !important;
+}
+
+.bg-drgn-primary {
+  background-color: var(--clr-primary) !important;
+}
+
+.bg-drgn-plight {
+  background-color: var(--clr-plight);
+}
+
+b,
+strong {
+  font-weight: 800;
+}
+
+.dropdown-header-wrapper {
+  background-color: #4e73df;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 1.5rem;
+}
+
+#read-all-icon {
+  color: white;
+}
+
+#notification-list {
+  max-height: 250px;
+  overflow: auto;
+}
+
+.notification-item {
+  color: #3a3b45 !important;
 }
 
 /* Login page */
@@ -148,6 +280,25 @@ hr {
   animation-fill-mode: forwards;
 }
 
+.input-hidden {
+  position: fixed;
+  z-index: -2;
+  left: -11111111111111111111px;
+  top: -111111111111111111111px;
+}
+
+.account__uuid-wrapper {
+  margin-right: 7px;
+}
+
+#account__uuid-copy {
+  cursor: pointer;
+}
+
+.account__uuid-copy_icon {
+  pointer-events: none;
+}
+
 @keyframes fadeOut {
   100% {
     opacity: 0;
@@ -188,8 +339,13 @@ hr {
   margin-left: 105px;
 }
 
+.navbar-nav.top-navbar {
+  display: flex;
+  justify-content: flex-end;
+}
+
 #content-wrapper {
-  margin-left: 224px;
+  margin-left: 240px;
 }
 
 .btn-user,
@@ -312,7 +468,6 @@ hr {
 }
 
 .minecraft-account-check {
-  align-self: baseline;
   cursor: pointer;
 }
 
@@ -339,6 +494,161 @@ hr {
   filter: blur(4px);
 }
 
+.connection_item-bind-btn {
+  align-self: center;
+  color: #26c17d !important;
+  padding: 5px 12px;
+  font-weight: 600;
+  font-size: 1.05rem;
+  border: 2px solid #26c17d;
+  border-radius: 3px;
+
+  transition: 0.2s ease;
+}
+
+.connection_item-bind-btn:hover {
+  text-decoration: none;
+  color: #ffffff !important;
+  background-color: #26c17d;
+  border: 2px solid #26c17d;
+}
+
+.connection_item-unbind-btn {
+  align-self: center;
+  color: #e74a3b !important;
+  padding: 5px 12px;
+  font-weight: 600;
+  font-size: 1.05rem;
+  border: 2px solid #e74a3b;
+  border-radius: 3px;
+
+  transition: 0.2s ease;
+}
+
+.connection_item-unbind-btn:hover {
+  text-decoration: none;
+  color: #ffffff !important;
+  background-color: #e74a3b;
+  border: 2px solid #e74a3b;
+}
+
+.connection_item-description {
+  margin-bottom: 0.6rem;
+}
+
+.connection_item-img {
+  width: 30px;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+}
+
+.connection_item-title {
+  align-self: center;
+}
+
+.connection_item-name {
+  font-size: 1.2rem;
+}
+
+.accordion-wrapper {
+  width: 95%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.accordion-item {
+  background: #fff;
+  color: #111;
+  margin: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.accordion-item-header {
+  padding: 0.5rem 3rem 0.5rem 1rem;
+  min-height: 3.2rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.accordion-item.accordion-connection .accordion-item-header.accordion-no-body {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 1.2rem;
+  padding-bottom: 1.2rem;
+}
+
+.accordion-no-body.accordion-item-header::before {
+  display: none;
+}
+.accordion-no-body.accordion-item-header {
+  cursor: auto;
+}
+
+.accordion-item-header span {
+  margin-right: 0.7rem;
+  color: var(--clr-primary);
+}
+
+.accordion-no-body.accordion-item-header::before {
+  display: none;
+}
+.accordion-no-body.accordion-item-header {
+  cursor: auto;
+}
+
+.accordion-item-header::before {
+  content: '\002B';
+  font-size: 2rem;
+  position: absolute;
+  right: 1rem;
+  transition: transform 0.2s ease;
+}
+
+.accordion-item-header.accordion-active::before {
+  transform: rotate(45deg);
+}
+
+.accordion-item-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.15s ease-out;
+}
+
+.accordion-item-body-content {
+  padding: 0 0.8rem 0.8rem;
+  line-height: 1.5rem;
+}
+
+.accordion-item__description {
+  padding: 0 0.8rem;
+}
+
+.connection_item-information {
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 94%;
+  min-height: 50px;
+}
+
+.connection_item-information__inner {
+  display: flex;
+  align-items: center;
+}
+
 /* PARTNER */
 #partner-income-type-btn {
   padding: 0.2rem 1.4rem !important;
@@ -361,7 +671,6 @@ hr {
 #partner-revenue_discount-note {
   padding-left: 1.25rem;
   margin-top: -10px;
-  display: none;
 }
 
 @media (max-width: 770px) {

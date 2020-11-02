@@ -28,129 +28,113 @@ function number_format(number, decimals, dec_point, thousands_sep) {
   return s.join(dec);
 }
 
-let myLineChart;
-let playTimeYear;
-
+const ctx = document.getElementById("myAreaChart");
+let playTimeYear = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+var myLineChart = new Chart(ctx, {
+  type: 'line',
+  data: {
+    labels: getPreviousMonths(12),
+    datasets: [{
+      label: "Playtime",
+      lineTension: 0.3,
+      backgroundColor: "rgba(78, 115, 223, 0.05)",
+      borderColor: "rgba(78, 115, 223, 1)",
+      pointRadius: 3,
+      pointBackgroundColor: "rgba(78, 115, 223, 1)",
+      pointBorderColor: "rgba(78, 115, 223, 1)",
+      pointHoverRadius: 3,
+      pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
+      pointHoverBorderColor: "rgba(78, 115, 223, 1)",
+      pointHitRadius: 10,
+      pointBorderWidth: 2,
+      data: playTimeYear,
+    }],
+  },
+  options: {
+    maintainAspectRatio: false,
+    layout: {
+      padding: {
+        left: 10,
+        right: 25,
+        top: 25,
+        bottom: 0
+      }
+    },
+    scales: {
+      xAxes: [{
+        time: {
+          unit: 'date',
+          tooltipFormat: 'MMM YYYY'
+        },
+        gridLines: {
+          display: false,
+          drawBorder: false
+        },
+        ticks: {
+          maxTicksLimit: 7
+        }
+      }],
+      yAxes: [
+        {
+          ticks: {
+            maxTicksLimit: 10,
+            padding: 10,
+            // Include a dollar sign in the ticks
+            callback: function (value, index, values) {
+              return formatHours(value)
+            },
+          },
+          gridLines: {
+            circular: true,
+            color: "rgb(234, 236, 244)",
+            zeroLineColor: "rgb(234, 236, 244)",
+            drawBorder: false,
+            borderDash: [2],
+            drawTicks: true,
+            zeroLineBorderDash: [2],
+          },
+        },
+      ],
+    },
+    legend: {
+      display: false
+    },
+    tooltips: {
+      backgroundColor: "rgb(255,255,255)",
+      bodyFontColor: "#858796",
+      titleMarginBottom: 10,
+      titleFontColor: '#6e707e',
+      titleFontSize: 14,
+      borderColor: '#dddfeb',
+      borderWidth: 1,
+      xPadding: 15,
+      yPadding: 15,
+      displayColors: false,
+      intersect: false,
+      mode: 'index',
+      caretPadding: 10,
+      callbacks: {
+        label: function (tooltipItem, chart) {
+          const datasetLabel =
+            chart.datasets[tooltipItem.datasetIndex].label || "";
+          return datasetLabel + ": " + formatHours(tooltipItem.yLabel);
+        },
+      },
+    }
+  }
+});
+window.addEventListener('load', () => {
+  loadData()
+})
 async function loadData() {
   const result = await fetch("https://dashboard.playdragonfly.net/statistics/ot/month/all")
   const json = await result.json()
   playTimeYear = json.playTimeYear
+  console.log(json, "DONE")
 
-  // Area Chart Example
-  const ctx = document.getElementById("myAreaChart");
-  myLineChart = new Chart(ctx, {
-    type: "line",
-    data: {
-      labels: getPreviousMonths(12),
-      datasets: [
-        {
-          label: "Playtime",
-          lineTension: 0.1,
-          backgroundColor: "rgba(78, 115, 223, 0.05)",
-          borderColor: "rgba(78, 115, 223, 1)",
-          pointRadius: 3,
-          pointBackgroundColor: "rgba(78, 115, 223, 1)",
-          pointBorderColor: "rgba(78, 115, 223, 1)",
-          pointHoverRadius: 5,
-          pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
-          pointHoverBorderColor: "rgba(78, 115, 223, 1)",
-          pointHitRadius: 15,
-          pointBorderWidth: 1,
-          data: playTimeYear,
-        },
-      ],
-    },
-    options: {
-
-      animation: {
-        tension: {
-          easing: 'easeInOutCubic',
-          duration: 500 // general animation time
-        }
-      },
-      hover: {
-        animationDuration: 200 // duration of animations when hovering an item
-      },
-      responsiveAnimationDuration: 00, // animation duration after a resize
-      maintainAspectRatio: false,
-      layout: {
-        padding: {
-          left: 10,
-          right: 25,
-          top: 25,
-          bottom: 10,
-        },
-      },
-      scales: {
-        xAxes: [
-          {
-            type: 'time',
-            time: {
-              unit: 'month',
-              tooltipFormat: 'MMM YYYY'
-            },
-            gridLines: {
-              display: false,
-              drawBorder: false,
-            },
-            ticks: {
-              maxTicksLimit: 12,
-              beginAtZero: false,
-            },
-          },
-        ],
-        yAxes: [
-          {
-            ticks: {
-              maxTicksLimit: 10,
-              padding: 10,
-              // Include a dollar sign in the ticks
-              callback: function (value, index, values) {
-                return formatHours(value)
-              },
-            },
-            gridLines: {
-              circular: true,
-              color: "rgb(234, 236, 244)",
-              zeroLineColor: "rgb(234, 236, 244)",
-              drawBorder: false,
-              borderDash: [2],
-              drawTicks: true,
-              zeroLineBorderDash: [2],
-            },
-          },
-        ],
-      },
-      legend: {
-        display: false,
-      },
-      tooltips: {
-        backgroundColor: "rgb(255,255,255)",
-        bodyFontColor: "#858796",
-        titleMarginBottom: 10,
-        titleFontColor: "#6E707E",
-        titleFontSize: 14,
-        borderColor: "#DDDFEB",
-        borderWidth: 1,
-        xPadding: 15,
-        yPadding: 15,
-        displayColors: false,
-        intersect: false,
-        mode: "index",
-        caretPadding: 10,
-        callbacks: {
-          label: function (tooltipItem, chart) {
-            const datasetLabel =
-              chart.datasets[tooltipItem.datasetIndex].label || "";
-            return datasetLabel + ": " + formatHours(tooltipItem.yLabel);
-          },
-        },
-      },
-    },
-  });
+  myLineChart.data.datasets[0].data = playTimeYear
+  myLineChart.update()
 }
-
-loadData()
 
 function formatHours(value) {
   const raw = value * 60

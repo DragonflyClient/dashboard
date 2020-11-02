@@ -24,12 +24,21 @@
                 href="https://twitter.com/DragonflyClient">Twitter</a> account or send us an <a
                 class="error_support-link" href="mailto:support@playdragonfly.net">email</a><br>
         </p>
-        <!-- <div class="back-link">
-            <h3><a href=<%= backUrl || "https://store.playdragonfly.net/?ref=error_checkout" %>>
+        <% if(!final) { %>
+        <div class="back-link">
+            <% if(backUrl) { %>
+            <h3><a href=<%= backUrl %>>
                     <span class="link-icon"><i class="fas fa-backward"></i></span> <span class="link-text">Back to
-                        store</span>
+                        dashboard</span>
                 </a></h3>
-        </div> -->
+            <% } else { %>
+            <h3><a href="https://dashboard.playdragonfly.net/?error=<%= error %>">
+                    <span class="link-icon"><i class="fas fa-backward"></i></span> <span class="link-text">Back to
+                        dashboard</span>
+                </a></h3>
+            <% } %>
+        </div>
+        <% } %>
     </div>
 
     <!-- Fontawesome -->

@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link rel="icon" href="https://cdn.icnet.dev/web/drgn/assets/img/svg/Dragon.svg" />
+    <link rel="stylesheet" href="https://dashboard.playdragonfly.net/css/cosmetics.css">
+    <link rel="stylesheet" href="https://dashboard.playdragonfly.net/css/account.css">
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    <title>Dragonfly - Account</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="https://dashboard.playdragonfly.net/vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
+        type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,800,900"
+        rel="stylesheet" />
+
+    <!-- Custom styles for this template-->
+    <link href="https://dashboard.playdragonfly.net/css/sb-admin-2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://dashboard.playdragonfly.net/css/style.css" />
+</head>
+
+<body id="page-top">
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <%- include('../partials/sidebar', { account: account }) %>
+        <!-- End of Sidebar -->
+
+        <div id="content-wrapper" style="background-color: #fff !important;" class="d-flex flex-column">
+            <!-- Main Content -->
+            <div id="content">
+                <!-- Topbar -->
+                <%- include('../partials/nav', { account: account }) %>
+                <!-- End of Topbar -->
+
+                <div class="container-fluid">
+                    <div class="row" style="width: 100%;">
+                        <!-- Playtime (Total) Card -->
+                        <div class="col-xl-4 col-md-6 mb-4">
+                            <div class="card border-left-drgn-primary shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-drgn-primary text-uppercase mb-1">
+                                                Dragonfly username
+                                            </div>
+                                            <label class="account__wrapper">
+                                                <input data-input-type="username"
+                                                    class="account__input h5 mb-0 font-weight-bold text-gray-800 account__username adjust"
+                                                    minlength="4" type="text" value=<%= account.username %>
+                                                    data-default=<%= account.username %>>
+                                                <span class="account__input-icon">
+                                                    <i class="fas fa-pen account__username-icon"></i>
+                                                </span>
+                                            </label>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-envelope fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-md-6 mb-4">
+                            <div class="card border-left-primary shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                Email address
+                                            </div>
+                                            <label class="account__wrapper">
+                                                <input data-input-type="email"
+                                                    class="account__input h5 mb-0 font-weight-bold text-gray-800 account__username adjust"
+                                                    minlength="4" type="text" value=<%= account.email || "Add" %>
+                                                    data-input-type="email" data-default=<%= account.email ||"Add" %>>
+                                                <span class="account__input-icon">
+                                                    <% if(account.email == 'data-input-type="email"' || !account.email ) { %>
+                                                    <i class="fas fa-plus"></i>
+                                                    <% } else { %>
+                                                    <i class="fas fa-pen account__username-icon"></i>
+                                                    <% } %>
+                                                </span>
+                                            </label>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-envelope fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-md-6 mb-4">
+                            <div class="card border-left-warning shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                                Dragonfly UUID
+                                            </div>
+
+                                            <input type="text" id="uuid-input" class="input-hidden"
+                                                value=<%= account.uuid %>>
+                                            <span class="h6 mb-0 font-weight-bold text-gray-800 account__uuid-wrapper">
+                                                <%= account.uuid %>
+                                            </span>
+                                            <span id="account__uuid-copy" onclick="copyUUID()">
+                                                <i class="fas fa-copy account__uuid-copy_icon"></i>
+                                            </span>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-fingerprint fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!-- Account creation date - Card -->
+                        <div class="col-xl-6 col-md-6 mb-4">
+                            <div class="card border-left-info shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                                Account creation date
+                                            </div>
+                                            <div id="dragonfly-account-creation-date"
+                                                class="h5 mb-0 font-weight-bold text-gray-800">
+                                                <%= account.creationDate %>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-clock fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Account rank - Card -->
+                        <div class="col-xl-6 col-md-6 mb-4">
+                            <div class="card border-left-drgn-pdark shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-drgn-pdark text-uppercase mb-1">
+                                                Dragonfly rank
+                                            </div>
+                                            <div id="dragonfly-account-creation-date"
+                                                class="h5 mb-0 font-weight-bold text-gray-800">
+                                                <%= account.rank %>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-star fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Content Row -->
+                    <div class="row" style="width: 100%;">
+                        <div class="col-lg-6 mb-4">
+                            <!-- Project Card Example -->
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">
+                                        Minecraft Accounts
+                                    </h6>
+                                </div>
+                                <div class="card-body minecraft-account-card" id="minecraft-account-card">
+                                    <% if(linkedMinecraftAccounts.length >= 1) { %>
+                                    <%- include('../partials/minecraft-accounts', { linkedMinecraftAccounts: linkedMinecraftAccounts }) %>
+                                    <% } else { %>
+                                    <p style="padding-top: 10px;">All linked minecraft accounts are displayed here.</p>
+                                    <% } %>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 mb-4">
+                            <!-- Redeem cosmetic card -->
+                            <div class="card shadow mb-4" id="redeem-cosmetic-wrapper">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-drgn-primary">
+                                        Redeem cosmetic token
+                                    </h6>
+                                </div>
+                                <div class="card-body">
+                                    <form id="cosmetic-token-form">
+                                        <div class="input-group mb-3">
+                                            <input type="text" name="token" id="cosmetic-token-input"
+                                                placeholder="CSM-XXXXXX-XXXXXX" autocomplete="off" class="form-control"
+                                                aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                                        </div>
+                                        <button type="submit" id="cosmetic-token-submit" style="width: 100%;"
+                                            class="btn btn-primary">Redeem</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <% if(account.permissionLevel > 9) { %>
+                    <div class="row" style="width: 100%;">
+                        <div class="col-lg-6 mb-4">
+                            <!-- Redeem cosmetic card -->
+                            <div class="card shadow mb-4" id="redeem-cosmetic-wrapper">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-drgn-primary">
+                                        Connections
+                                    </h6>
+                                </div>
+                                <div class="card-body" style="padding: 0 !important;">
+                                    <% if(spotifyInfo.images) { %>
+                                    <div class="accordion-item">
+                                        <div id="201" class="accordion-item-header">
+                                            <span><i class="fab fa-spotify" style="color: #1DB954;"></i></span><span
+                                                style="color: #1DB954;"> Spotify</span>
+                                        </div>
+                                        <div class="problem-desc accordion-item__description">
+                                            <p>You can link your Spotify account to your Dragonfly account to control
+                                                your Spotify while playing.</p>
+                                        </div>
+                                        <div class="accordion-item-body">
+                                            <div class="accordion-item-body-content">
+                                                <div class="problem-fix">
+                                                    <div class="connection_item-information">
+                                                        <div class="connection_item-information__inner">
+                                                            <img class="connection_item-img"
+                                                                src=<%= spotifyInfo.images[0].url %>
+                                                                alt=<%= spotifyInfo.display_name %>>
+                                                            <span
+                                                                class="connection_item-name"><%= spotifyInfo.display_name %></span>
+                                                        </div>
+                                                        </h3>
+                                                        <div class="minecraft-account-check">
+                                                            <a href="https://dashboard.playdragonfly.net/link/remove/spotify"
+                                                                class="connection_item-unbind-btn">Unlink</a>
+                                                        </div>
+                                                    </div>
+                                                    <p>The data that can be retrieved from the connection are stored
+                                                        securely and are not shared with third parties.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <% } else { %>
+                                    <div class="accordion-item accordion-connection">
+                                        <div id="201" class="accordion-item-header accordion-no-body">
+                                            <div>
+                                                <span><i class="fab fa-spotify" style="color: #1DB954;"></i></span><span
+                                                    style="color: #1DB954;"> Spotify</span>
+                                            </div>
+                                            <div class="minecraft-account-check">
+                                                <a href="https://dashboard.playdragonfly.net/link/spotify"
+                                                    class="connection_item-bind-btn">Link</a>
+                                            </div>
+                                        </div>
+                                        <div class="problem-desc accordion-item__description">
+                                            <p>You can link your Spotify account to your Dragonfly account to control
+                                                your Spotify while playing.</p>
+                                        </div>
+                                    </div>
+                                    <% } %>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <% } %>
+
+                    <!-- Content Row -->
+                </div>
+                <!-- <h4 class="note_coming-soon">More coming soon...</h4> -->
+            </div>
+        </div>
+    </div>
+    </div>
+    <!-- Bootstrap core JavaScript-->
+    <script src="https://dashboard.playdragonfly.net/vendor/jquery/jquery.js"></script>
+    <script src="https://dashboard.playdragonfly.net/vendor/bootstrap/js/bootstrap.bundle.js"></script>
+    <script src="https://dashboard.playdragonfly.net/js/main.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
+        integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
+        crossorigin="anonymous"></script>
+
+    <script src="https://dashboard.playdragonfly.net/js/sb-admin-2.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://dashboard.playdragonfly.net/js/account.js"></script>
+</body>
+
+</html>

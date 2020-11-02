@@ -5,15 +5,32 @@ const mongoose = require('mongoose')
 const moment = require('moment')
 const axios = require('axios').default
 
+const BASE_API_URL = 'http://localhost:1414'
+
+const secureAuth = async (req, res, next) => {
+    console.log('right')
+    const token = req.cookies["dragonfly-token"]
+    console.log(token, "TOKEn")
+    if (!token) return res.redirect('https://playdragonfly.net/login?ref=https://dashboard.playdragonfly.net')
+    const account = await getDragonflyAccount(token)
+    console.log(account, "middle")
+    if (account == null) {
+        return res.status(401).render('error', { message: "Error while authenticating. Please try again later or login", backUrl: null, error: "auth_timeout", final: true })
+    }
+    req.account = account
+    next()
+}
+
+
+router.use(secureAuth)
+
 router.get('/ot/total', async (req, res, next) => {
     const token = req.cookies["dragonfly-token"]
-    const account = await getDragonflyAccount(token)
+    const account = req.account
     const dragonflyUUID = account.uuid
     const statistics = await mongoose.connection.db.collection('statistics').findOne({ dragonflyUUID: dragonflyUUID });
 
     let totalPlaytime = 0
-
-    // account.creationDate = moment(account.creationDate).format('LL');
 
     if (statistics) {
         totalPlaytime = statistics.onlineTime.total
@@ -24,7 +41,8 @@ router.get('/ot/total', async (req, res, next) => {
 
 router.get('/ot/month/all', async (req, res) => {
     const token = req.cookies['dragonfly-token']
-    const account = await getDragonflyAccount(token)
+    const account = req.account
+    console.log(account)
     const dragonflyUUID = account.uuid
     const document = await mongoose.connection.db.collection('statistics').findOne({ dragonflyUUID: dragonflyUUID });
     const data = document.onlineTime
@@ -56,12 +74,24 @@ function format(month, year) {
 }
 
 async function getDragonflyAccount(token) {
-    const result = await axios.post('https://api.playdragonfly.net/v1/authentication/token', {}, {
+    let account;
+    await axios.post(`${BASE_API_URL}/v1/authentication/token`, {}, {
+        timeout: 6000,
         headers: {
             "Authorization": `Bearer ${token}`
         }
     })
-    return result.data
+        .then(result => {
+            account = result.data
+        })
+        .catch(err => {
+            console.log(err)
+            if (err) {
+                console.log(err)
+            }
+        })
+
+    return account
 }
 
 module.exports = router

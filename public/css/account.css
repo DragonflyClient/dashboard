@@ -1,0 +1,21 @@
+.adjust {
+    transition: width .15s;
+}
+.account__username {
+    outline: none;
+    border: none;
+}
+
+.account__username:focus {
+    border: 1px solid #5a5c69;
+}
+
+/* .account__username-wrapper {
+    display: flex;
+} */
+
+.account__username-icon {
+    width: 20px;
+    margin-top: -7px;
+    pointer-events: none;
+}
