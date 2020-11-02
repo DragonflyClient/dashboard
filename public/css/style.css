@@ -414,6 +414,7 @@ hr {
 }
 
 .minecraft-account-name {
+  word-break: break-all;
   font-size: 1.4rem;
   margin: 0;
 }
