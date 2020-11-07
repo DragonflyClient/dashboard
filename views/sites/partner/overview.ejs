@@ -53,7 +53,7 @@
                     <!-- Content Row -->
                     <div class="row" style="width: 100%;">
                         <!-- Playtime (Total) Card -->
-                        <div class="col-xl-4 col-md-6 mb-4">
+                        <div class="col-xl-6 col-md-6 mb-4">
                             <div class="card border-left-primary shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
@@ -63,12 +63,7 @@
                                             </div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800"
                                                 id="partner-revenue_wrapper">
-                                                <% if(!ref || Object.keys(ref).length === 0) { %>
-                                                <span id="partner-revenue_value"><%= message %></span>
-                                                <% } else { %>
-                                                <span id="partner-revenue_value"><%= ref.amount %></span>
-                                                <span id="partner-revenue_currency">€</span>
-                                                <% } %>
+                                                <span id="partner-revenue_value"><%= refAmount %></span>
                                             </div>
                                         </div>
                                         <div class="col-auto">
@@ -76,62 +71,20 @@
                                         </div>
                                     </div>
                                 </div>
-                                <% if(!ref || Object.keys(ref).length !== 0 && ref.type == "discount") { %>
-                                <p class="small" id="partner-revenue_discount-note">While using "discount"
-                                    as the
-                                    income mode, your
-                                    revenue won't change.</p>
-                                <% } %>
-                            </div>
-                        </div>
-
-                        <!-- Income mode - Card -->
-                        <div class="col-xl-4 col-md-6 mb-4">
-                            <div class="card border-left-success shadow h-100 py-2">
-                                <div class="card-body income-mode-card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                Income mode
-                                            </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                <div class="dropdown" style="margin-top: 5px;">
-                                                    <button class="btn btn-secondary dropdown-toggle" type="button"
-                                                        id="partner-income-type-btn" data-toggle="dropdown"
-                                                        aria-haspopup="true" aria-expanded="false">
-                                                        <span id="income-type_selected"
-                                                            data-selected-income=<%= ref.type || "unlinked" %>><%= ref.type || "N/A" %></span>
-                                                    </button>
-                                                    <div class="dropdown-menu" id="income-type_dropdown"
-                                                        aria-labelledby="dropdownMenuButton">
-                                                        <a class="dropdown-item income-type"
-                                                            data-income-type=<%= Object.keys(ref).length !== 0 && ref.type == "discount" ? "bonus" : "discount" %>
-                                                            href="#"><%= Object.keys(ref).length !== 0 && ref.type == "discount" ? "Bonus" : "Discount" %>
-                                                        </a>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-funnel-dollar fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
 
                         <!-- Amount of purchases - Card -->
-                        <div class="col-xl-4 col-md-6 mb-4">
+                        <div class="col-xl-6 col-md-6 mb-4">
                             <div class="card border-left-drgn-pdark shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-drgn-pdark text-uppercase mb-1">
-                                                Amount of purchases
+                                                Number of bonuses received
                                             </div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                <%= Object.keys(ref).length !== 0 ? ref.count : "0" %>
+                                                0
                                             </div>
                                         </div>
                                         <div class="col-auto">
