@@ -54,6 +54,7 @@ router.get('/overview', async (req, res) => {
 		.catch(err => {
 			console.log(err.response.data);
 			totalAmount = err.response.data.error;
+			registrationAmount = err.response.data.error;
 		});
 	console.log(totalAmount, 'RA', totalCount);
 
