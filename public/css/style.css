@@ -41,6 +41,10 @@
   }
 }
 
+.container-fluid.coming-more {
+  padding-bottom: 35px !important;
+}
+
 .us-none {
   user-select: none;
 }
