@@ -1,68 +1,54 @@
 <!-- Sidebar -->
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-  <!-- Sidebar - Brand -->
-  <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
-    <div class="sidebar-brand-icon">
-      <img
-        src=" https://cdn.icnet.dev/web/drgn/assets/img/png/Dragon-white.png"
-        style="vertical-align: unset"
-        width="35px"
-      />
-    </div>
-    <div class="sidebar-brand-text mx-3">Dragonfly</div>
-  </a>
+	<!-- Sidebar - Brand -->
+	<a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
+		<div class="sidebar-brand-icon">
+			<img src=" https://cdn.icnet.dev/web/drgn/assets/img/png/Dragon-white.png" style="vertical-align: unset" width="35px" />
+		</div>
+		<div class="sidebar-brand-text mx-3">Dragonfly</div>
+	</a>
 
-  <!-- Divider -->
-  <hr class="sidebar-divider my-0" />
+	<!-- Divider -->
+	<hr class="sidebar-divider my-0" />
 
-  <!-- Nav Item - Dashboard -->
-  <li class="nav-item" id="/">
-    <a class="nav-link" href="/">
-      <i class="fas fa-fw fa-tachometer-alt"></i>
-      <span>Dashboard</span></a
-    >
-  </li>
+	<!-- Nav Item - Dashboard -->
+	<li class="nav-item" id="/">
+		<a class="nav-link" href="/">
+			<i class="fas fa-fw fa-tachometer-alt"></i>
+			<span>Dashboard</span></a
+		>
+	</li>
 
-  <!-- Nav Item -->
-  <li class="nav-item" id="cosmetics">
-    <a class="nav-link" href="https://dashboard.playdragonfly.net/cosmetics">
-      <i class="fas fa-mask"></i>
-      <span>Cosmetics</span></a
-    >
-  </li>
+	<!-- Nav Item -->
+	<li class="nav-item" id="cosmetics">
+		<a class="nav-link" href="https://dashboard.playdragonfly.net/cosmetics">
+			<i class="fas fa-mask"></i>
+			<span>Cosmetics</span></a
+		>
+	</li>
 
-  <!-- Divider -->
-  <hr class="sidebar-divider" />
+	<!-- Divider -->
+	<hr class="sidebar-divider" />
 
-  <% if(account.permissionLevel >= 8) { %>
-  <div class="sidebar-heading">Partner</div>
-  <li class="nav-item" id="overview">
-    <a
-      class="nav-link"
-      href="https://dashboard.playdragonfly.net/partner/overview"
-      aria-expanded="true"
-      aria-controls="collapseTwo"
-    >
-      <i class="fas fa-poll"></i>
-      <span>Overview</span>
-    </a>
-  </li>
-  <!-- Divider -->
-  <hr class="sidebar-divider" />
-  <% } %>
-  <li class="nav-item" id="account">
-    <a
-      class="nav-link"
-      href="https://dashboard.playdragonfly.net/account"
-      aria-expanded="true"
-      aria-controls="collapseTwo"
-    >
-      <i class="fas fa-user-circle"></i>
-      <span>Account</span>
-    </a>
-  </li>
+	<% if(account.permissionLevel >= 7) { %>
+	<div class="sidebar-heading">Partner</div>
+	<li class="nav-item" id="overview">
+		<a class="nav-link" href="https://dashboard.playdragonfly.net/partner/overview" aria-expanded="true" aria-controls="collapseTwo">
+			<i class="fas fa-poll"></i>
+			<span>Overview</span>
+		</a>
+	</li>
+	<!-- Divider -->
+	<hr class="sidebar-divider" />
+	<% } %>
+	<li class="nav-item" id="account">
+		<a class="nav-link" href="https://dashboard.playdragonfly.net/account" aria-expanded="true" aria-controls="collapseTwo">
+			<i class="fas fa-user-circle"></i>
+			<span>Account</span>
+		</a>
+	</li>
 
-  <!-- <div class="sidebar-heading">
+	<!-- <div class="sidebar-heading">
         Addons
     </div>
     <li class="nav-item">
@@ -85,7 +71,7 @@
         </div>
     </li> -->
 
-  <!-- <li class="nav-item">
+	<!-- <li class="nav-item">
         <a class="nav-link" href="charts.html">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Charts</span></a>
@@ -96,9 +82,9 @@
             <span>Tables</span></a>
     </li> -->
 
-  <!-- Sidebar Toggler (Sidebar) -->
-  <div class="text-center d-none d-md-inline">
-    <button class="rounded-circle border-0" id="sidebarToggle"></button>
-  </div>
+	<!-- Sidebar Toggler (Sidebar) -->
+	<div class="text-center d-none d-md-inline">
+		<button class="rounded-circle border-0" id="sidebarToggle"></button>
+	</div>
 </ul>
 <script src="https://dashboard.playdragonfly.net/js/partials/sidebar.js"></script>

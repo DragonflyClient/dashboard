@@ -9,7 +9,7 @@ const BASE_API_URL = 'http://localhost:1414';
 const requirePerms = async function (req, res, next) {
 	const token = req.cookies['dragonfly-token'];
 	const account = await getDragonflyAccount(token);
-	if (account == null || account.permissionLevel < 9) {
+	if (account == null || account.permissionLevel < 7) {
 		res.status(401).render('error', { message: 'Insufficient permissions', backUrl: null, error: 'insufficient_perms', final: false });
 	} else {
 		req.account = account;
