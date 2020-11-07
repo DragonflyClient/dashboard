@@ -49,7 +49,7 @@
                 <%- include('../../partials/nav', { account: account, path: path }) %>
                 <!-- End of Topbar -->
 
-                <div class="container-fluid">
+                <div class="container-fluid coming-more">
                     <!-- Content Row -->
                     <div class="row" style="width: 100%;">
                         <!-- Playtime (Total) Card -->
@@ -63,7 +63,7 @@
                                             </div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800"
                                                 id="partner-revenue_wrapper">
-                                                <span id="partner-revenue_value"><%= refAmount %></span>
+                                                <span id="partner-revenue_value"><%= totalAmount %></span>
                                             </div>
                                         </div>
                                         <div class="col-auto">
@@ -81,10 +81,10 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-drgn-pdark text-uppercase mb-1">
-                                                Number of bonuses received
+                                                Number of bonuses received (Total)
                                             </div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                0
+                                                <%= totalReceived %>
                                             </div>
                                         </div>
                                         <div class="col-auto">
@@ -140,6 +140,51 @@
                                 </div>
                             </div>
                         </div> -->
+                    </div>
+
+                    <div class="row" style="width: 100%;">
+                        <!-- Playtime (Total) Card -->
+                        <div class="col-xl-6 col-md-6 mb-4">
+                            <div class="card border-left-info shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                                Revenue (registrations)
+                                            </div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"
+                                                id="partner-revenue_wrapper">
+                                                <span id="partner-revenue_value"><%= registrationAmount %></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-money-bill fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Amount of purchases - Card -->
+                        <div class="col-xl-6 col-md-6 mb-4">
+                            <div class="card border-left-warning shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                                Number of bonuses received (registrations)
+                                            </div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                <%= registrationCount %> 
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-sort-amount-up-alt fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Content Row -->
