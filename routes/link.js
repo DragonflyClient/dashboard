@@ -24,7 +24,8 @@ var scopes = [
     'user-read-currently-playing',
     'app-remote-control',
     'user-read-recently-played',
-    'user-modify-playback-state'
+    'user-modify-playback-state',
+    'user-read-playback-state'
 ];
 
 var showDialog = true;
